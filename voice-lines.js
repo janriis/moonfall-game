@@ -482,7 +482,14 @@ export const VOICE_LINES = [
 ].map(line => ({ ...line, file: `assets/voices/${line.id}.mp3` }));
 
 const VOICE_LOOKUP = new Map(VOICE_LINES.map(line => [`${line.speaker}\n${line.text}`, line]));
+const VOICE_BY_ID = new Map(VOICE_LINES.map(line => [line.id, line]));
 
 export function voiceLineFor(speaker, text) {
   return VOICE_LOOKUP.get(`${speaker}\n${text}`) || null;
+}
+
+export function dialogue(id) {
+  const line = VOICE_BY_ID.get(id);
+  if (!line) throw new Error(`Unknown dialogue id: ${id}`);
+  return [line.speaker, line.text];
 }
