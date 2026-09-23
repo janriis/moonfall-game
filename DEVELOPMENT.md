@@ -91,7 +91,7 @@ Existing clips are skipped. Use `npm run generate:voices -- --force` only when i
 - `game.js` — state, puzzles, narration, dialogue, movement, sound, saves
 - `voice-lines.js` — exact dialogue-to-audio manifest
 - `scripts/generate-voices.mjs` — Kokoro-to-MP3 generation and voice effects
-- `sw.js` — offline precache list; bump its cache version whenever shipped files change
+- `sw.js` — offline precache list; run `npm run bump-version` to auto-set the cache version from the current git SHA before deploying
 - `server.mjs` — local static server
 - `assets/` — original generated raster art, SVG UI assets, and bundled voice clips
 
@@ -126,7 +126,7 @@ In the browser, verify a new game, Continue, room narration, return visits, move
 ## Known maintenance risks
 
 - Voiced dialogue is intentionally duplicated between `game.js` and `voice-lines.js`; punctuation changes can silently break lookup.
-- The service-worker version and file list are updated manually.
+- The service-worker version is auto-generated from git SHA via `npm run bump-version`; run it before deploying.
 - Gameplay does not yet have automated end-to-end tests.
 - The current story stops when the moonseed reveals a fracture across the moon and the restored celestial compass points inside it.
 - Google Fonts are optional network resources. Offline play uses the serif fallback.
