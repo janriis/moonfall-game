@@ -1,4 +1,4 @@
-import { voiceLineFor } from './voice-lines.js';
+import { voiceLineFor, dialogue } from './voice-lines.js';
 
 const $ = (q, root = document) => root.querySelector(q);
 const $$ = (q, root = document) => [...root.querySelectorAll(q)];
@@ -244,7 +244,7 @@ function prepareChapterFour() {
 
 function enterChapterFourScene() {
   describeRoom(state.scene, [
-    ['Elowen','I came this far once. The throne never had a king—only a lock.'],
+    dialogue('elowen-throne-lock'),
     ['Liora','Then we find its key before whatever is below finds its way up.']
   ]);
 }
@@ -266,9 +266,9 @@ function prepareChapterFive() {
 
 function enterChapterFiveScene() {
   describeRoom(state.scene, [
-    ['Warden','The crown has not found Elowen. It has remembered her.'],
-    ['Elowen','It cannot. My name was cut from every royal record.'],
-    ['Warden','Not from your blood.']
+    dialogue('warden-crown-remembered'),
+    dialogue('elowen-records-cut'),
+    dialogue('warden-not-blood')
   ]);
 }
 
@@ -289,8 +289,8 @@ function prepareChapterSix() {
 
 function enterChapterSixScene() {
   describeRoom(state.scene, [
-    ['Warden','I will remain. Lantern City has forgotten how to live beneath an open sky.'],
-    ['Elowen','And the compass has chosen a road.'],
+    dialogue('warden-remain-city'),
+    dialogue('elowen-compass-road'),
     ['Liora','Keep one light burning. We will follow it home.']
   ]);
 }
@@ -613,29 +613,29 @@ function useHotspot(id) {
 function talkToMosswick(item) {
   if (item) {
     const reactions = {
-      lantern:'Brass remembers every flame it has carried. Yours is waiting for a kinder sort of fire.',
-      glowcap:'A fine little dawn-button. Best give it a safe house before asking it into the dark.',
-      litLantern:'Now that is a civilized light. The root hollow may grumble, but it will let you look.',
-      starKey:'Seven rays. Orrery work. I wondered when that old lock would begin dreaming again.',
-      moonwater:'Careful with that. The well keeps the sky it wishes we still had.'
+      lantern: dialogue('mosswick-lantern'),
+      glowcap: dialogue('mosswick-glowcap'),
+      litLantern: dialogue('mosswick-lit-lantern'),
+      starKey: dialogue('mosswick-star-key'),
+      moonwater: dialogue('mosswick-moonwater')
     };
-    say([['Mosswick',reactions[item] || 'Useful, perhaps. But not to an old keeper with too many pockets already.']]);
+    say([reactions[item] || dialogue('mosswick-default')]);
     return;
   }
   const f = state.flags;
   if (!f.metMosswick) {
     f.metMosswick = true;
-    say([['Mosswick','Soft steps, wayfinder. The roots have been nervous since the sky went quiet.'],['Liora','You knew I was coming?'],['Mosswick','No. But the mushrooms did, and they are terrible at keeping secrets.']]);
+    say([dialogue('mosswick-soft-steps'), ['Liora','You knew I was coming?'], dialogue('mosswick-mushrooms-knew')]);
   } else if (!f.tookGlowcap) {
-    say([['Mosswick','When the heavens go dark, look for the smallest lights. They are usually less dramatic and more helpful.']]);
+    say([dialogue('mosswick-smallest-lights')]);
   } else if (state.inventory.includes('glowcap') && state.inventory.includes('lantern')) {
-    say([['Mosswick','A wandering glow and an empty lantern? Introduce them. Politely.']]);
+    say([dialogue('mosswick-introduce-them')]);
   } else if (!f.litHollow) {
-    say([['Mosswick','The hollow guards what the observatory lost. Bring a light that will not scorch the roots.']]);
+    say([dialogue('mosswick-hollow-guards')]);
   } else if (!f.drewWater) {
-    say([['Mosswick','You found the key. Good. Do not leave without asking the old well what sky it remembers.']]);
+    say([dialogue('mosswick-ask-the-well')]);
   } else {
-    say([['Mosswick','Up the eastern path, then. If the orrery complains, remind it that centuries are no excuse for bad manners.']]);
+    say([dialogue('mosswick-eastern-path')]);
   }
 }
 
@@ -679,7 +679,7 @@ function useChapterTwoHotspot(id, item) {
   } else if (id === 'cityGate') {
     if (item === 'tunedChime' && !state.flags.openedGate) {
       state.flags.openedGate=true; removeItem('tunedChime'); magicEffect(50,40); chime(); save();
-      say([['Liora','The note passes through the gate like sunrise through glass.'],['Unknown voice','Liora? Is that truly you?']], transitionToChapterThree);
+      say([['Liora','The note passes through the gate like sunrise through glass.'],dialogue('unknown-liora')], transitionToChapterThree);
     } else if (state.flags.openedGate) say([['Liora','The city is awake—and someone inside knows my name.']]);
     else if (item) wrongItem(item,id);
     else say([['Liora','The seal is listening. It needs the song the city used to wake.']]);
@@ -707,7 +707,7 @@ function useChapterThreeHotspot(id, item) {
     if (item === 'memoryLens' && !state.flags.revealedName) {
       state.flags.revealedName=true; removeItem('memoryLens'); addItem('nameSigil');
       magicEffect(84,43); chime();
-      say([['Liora','The loom catches the light and draws one golden thread from the mirror.'],['Elowen','I can feel my name inside it. Bring it to the mirror, Liora.']]);
+      say([['Liora','The loom catches the light and draws one golden thread from the mirror.'],dialogue('elowen-name-sigil')]);
     } else if (state.flags.revealedName) say([['Liora','The loom has already woven everything the lens remembered.']]);
     else if (item) wrongItem(item,id);
     else say([['Liora','The cradle is shaped for a lens. The loom needs a memory it can see.']]);
@@ -715,9 +715,9 @@ function useChapterThreeHotspot(id, item) {
     if (item === 'nameSigil' && !state.flags.freedElowen) {
       state.flags.freedElowen=true; removeItem('nameSigil'); magicEffect(51,35); chime(); save();
       say([
-        ['Elowen','My name… I remember it.'],
+        dialogue('elowen-name-remembered'),
         ['Liora','Elowen.'],
-        ['Elowen','And I remember who closed the sky. The one beneath the palace is waking.']
+        dialogue('elowen-palace-warning')
       ], transitionToChapterFour);
     } else if (state.flags.freedElowen) say([['Liora','The glass is only a mirror now. That may be the kindest thing it has been in centuries.']]);
     else if (item) wrongItem(item,id);
@@ -730,32 +730,32 @@ function useChapterThreeHotspot(id, item) {
 function talkToElowen(item) {
   if (item) {
     const reactions = {
-      dawnMote:'That light followed us on the north road. It may still remember who walked beside you.',
-      hollowPrism:'The city used those prisms to keep memories from fading. This one has been empty too long.',
-      memoryLens:'Hold it to the loom. If any thread of me remains, the glass will find it.',
-      nameSigil:'I can feel my name inside it. Bring it to the mirror, Liora.'
+      dawnMote: dialogue('elowen-dawn-mote'),
+      hollowPrism: dialogue('elowen-hollow-prism'),
+      memoryLens: dialogue('elowen-memory-lens'),
+      nameSigil: dialogue('elowen-name-sigil')
     };
-    say([['Elowen',reactions[item] || 'Keep it close. Objects remember more here than people do.']]);
+    say([reactions[item] || dialogue('elowen-default')]);
     return;
   }
   const f = state.flags;
   if (f.freedElowen) {
-    say([['Elowen','The palace is our road now. We have very little night left.']]);
+    say([dialogue('elowen-little-night')]);
   } else if (!f.metElowen) {
     f.metElowen = true;
     say([
-      ['Elowen','You heard me. I had almost forgotten what hope sounded like.'],
+      dialogue('elowen-hope'),
       ['Liora','Elowen? You vanished the night the north road died.'],
-      ['Elowen','The city took my name before it took the stars. Without it, I cannot cross the glass.']
+      dialogue('elowen-city-took-name')
     ]);
   } else if (!f.tookMote || !f.tookPrism) {
-    say([['Elowen','The lantern tree kept one waking spark. The sundial kept the glass that once carried it.']]);
+    say([dialogue('elowen-lantern-sundial')]);
   } else if (!f.madeLens) {
-    say([['Elowen','Light remembers faces. Join the mote to the hollow prism and let it remember mine.']]);
+    say([dialogue('elowen-light-remembers')]);
   } else if (!f.revealedName) {
-    say([['Elowen','The loom can pull a true name from memory, but only if you give it a lens.']]);
+    say([dialogue('elowen-loom-lens')]);
   } else {
-    say([['Elowen','Bring the sigil to the mirror. Speak nothing—the glass has listened to enough lies.']]);
+    say([dialogue('elowen-bring-sigil')]);
   }
 }
 
@@ -779,7 +779,7 @@ function useChapterFourHotspot(id, item) {
   } else if (id === 'palaceDescent') {
     if (item === 'sunSeal' && !state.flags.openedDescent) {
       state.flags.openedDescent=true; removeItem('sunSeal'); magicEffect(51,43); chime(); save();
-      say([['Liora','The throne accepts the seal.'],['Elowen','There—the whole dais is turning. The way below is open.']]);
+      say([['Liora','The throne accepts the seal.'],dialogue('elowen-dais-turning')]);
     } else if (state.flags.openedDescent && !item) {
       changeScene('heartVault');
     } else if (state.flags.openedDescent) {
@@ -803,9 +803,9 @@ function useChapterFourHotspot(id, item) {
       state.flags.restoredWard=true; removeItem('bindingInk'); magicEffect(50,64); chime(); save();
       say([
         ['Liora','The ward is whole.'],
-        ['Warden','No. It is awake.'],
-        ['Elowen','Liora—the roots are moving toward the tower.'],
-        ['Warden','Then the Crown of Night has found its heir.']
+        dialogue('warden-no-awake'),
+        dialogue('elowen-roots-tower'),
+        dialogue('warden-crown-heir')
       ], transitionToChapterFive);
     } else if (state.flags.restoredWard) say([['Liora','Every repaired line points upward now. Toward the highest tower.']]);
     else if (item) wrongItem(item,id);
@@ -818,61 +818,61 @@ function useChapterFourHotspot(id, item) {
 function talkToPalaceElowen(item, inVault) {
   if (item) {
     const reactions = {
-      sunDisc:'That mosaic once marked the sun at the center of every royal oath.',
-      royalThread:'The banner still carries the old binding weave. Join its thread to the broken disc.',
-      sunSeal:'Set the seal into the throne. It should remember how to descend.',
-      starAsh:'The dead brazier remembers the stars. We need something living to make that memory hold.',
-      rootResin:'The roots have resin. Mix it with the brazier’s ash and we may be able to rewrite the ward.',
-      bindingInk:'Use it on the broken circle. Quickly—the pulse is getting stronger.'
+      sunDisc: dialogue('elowen-sun-mosaic'),
+      royalThread: dialogue('elowen-banner-weave'),
+      sunSeal: dialogue('elowen-seal-throne'),
+      starAsh: dialogue('elowen-ash-needs-living'),
+      rootResin: dialogue('elowen-resin-and-ash'),
+      bindingInk: dialogue('elowen-use-ink')
     };
-    say([['Elowen',reactions[item] || 'Keep it. The palace has already taken enough from us.']]);
+    say([reactions[item] || dialogue('elowen-palace-taken-enough')]);
     return;
   }
   const f = state.flags;
   if (inVault) {
-    if (!f.metWarden) say([['Elowen','He is the royal astronomer. I saw him at the north road before the sky closed.']]);
-    else if (!f.tookAsh || !f.tookResin) say([['Elowen','The roots have resin. The brazier has ash. Together they could rewrite the broken lines.']]);
-    else if (!f.madeInk) say([['Elowen','Mix the resin with the star ash. The ward is losing another line with every pulse.']]);
-    else say([['Elowen','The ward is failing. Whatever the Warden says, we cannot let it break.']]);
+    if (!f.metWarden) say([dialogue('elowen-royal-astronomer')]);
+    else if (!f.tookAsh || !f.tookResin) say([dialogue('elowen-rewrite-lines')]);
+    else if (!f.madeInk) say([dialogue('elowen-mix-ward-failing')]);
+    else say([dialogue('elowen-cannot-break')]);
   } else if (!f.metPalaceElowen) {
     f.metPalaceElowen = true;
-    say([['Elowen','I came this far once. The throne never had a king—only a lock.']]);
+    say([dialogue('elowen-throne-lock')]);
   } else if (!f.tookDisc) {
-    say([['Elowen','That mosaic once marked the sun at the center of every royal oath.']]);
+    say([dialogue('elowen-sun-mosaic')]);
   } else if (!f.tookThread) {
-    say([['Elowen','The banner still carries the old binding weave. Join its thread to the broken disc.']]);
+    say([dialogue('elowen-banner-weave')]);
   } else if (!f.madeSeal) {
-    say([['Elowen','Bind the disc with the royal thread. A repaired symbol may still command the throne.']]);
+    say([dialogue('elowen-bind-disc')]);
   } else {
-    say([['Elowen','Set the seal into the throne. It should remember how to descend.']]);
+    say([dialogue('elowen-seal-throne')]);
   }
 }
 
 function talkToWarden(item) {
   if (item) {
     const reactions = {
-      sunDisc:'Sunlight has no authority here. It never did.',
-      starAsh:'That ash came from the first star the palace taught to kneel.',
-      rootResin:'The roots remember every promise the crown broke.',
-      bindingInk:'An honest ink. A dangerous rarity.'
+      sunDisc: dialogue('warden-sunlight'),
+      starAsh: dialogue('warden-first-star'),
+      rootResin: dialogue('warden-roots-remember'),
+      bindingInk: dialogue('warden-honest-ink')
     };
-    say([['Warden',reactions[item] || 'Another palace relic. Keep it, if you enjoy carrying old mistakes.']]);
+    say([reactions[item] || dialogue('warden-default')]);
     return;
   }
   const f = state.flags;
   if (!f.metWarden) {
     f.metWarden = true;
     say([
-      ['Warden','Do not mend the circle, wayfinder. Its silence is the only mercy this city has left.'],
-      ['Elowen','You closed the sky.'],
-      ['Warden','I held it shut. There is a difference, though history seldom keeps it.']
+      dialogue('warden-do-not-mend'),
+      dialogue('elowen-you-closed-sky'),
+      dialogue('warden-held-sky')
     ]);
   } else if (!f.tookAsh || !f.tookResin) {
-    say([['Warden','The roots bleed resin where the ward has split. The dead brazier remembers the stars.']]);
+    say([dialogue('warden-resin-and-stars')]);
   } else if (!f.madeInk) {
-    say([['Warden','Mix them if you mean to bind me. But ask yourself why the city placed its crown underground.']]);
+    say([dialogue('warden-mix-warning')]);
   } else {
-    say([['Warden','You have made the ink. Whether you repair the ward or free it is the last honest choice this palace will offer.']]);
+    say([dialogue('warden-last-choice')]);
   }
 }
 
@@ -898,7 +898,7 @@ function useChapterFiveHotspot(id, item) {
       state.flags.openedStormGate=true; removeItem('livingCompass'); magicEffect(63,35); chime(); save();
       say([
         ['Liora','The compass chooses a point the old wind rose forgot.'],
-        ['Warden','The tower remembers the road its kings concealed.']
+        dialogue('warden-road-concealed')
       ]);
     } else if (state.flags.openedStormGate && !item) {
       changeScene('crownChamber');
@@ -922,8 +922,8 @@ function useChapterFiveHotspot(id, item) {
       state.flags.restoredCrown=true; removeItem('eclipseLens'); magicEffect(53,31); chime(); save();
       say([
         ['Liora','The lens is showing me the first design. It was never a crown.'],
-        ['Elowen','A compass. The kings turned guidance into command.'],
-        ['Warden','Then give it no heir. Give it the sky.'],
+        dialogue('elowen-crown-compass'),
+        dialogue('warden-give-sky'),
         ['Liora','Every road belongs to the traveler.']
       ], showChapterFiveEnding);
     } else if (state.flags.restoredCrown) {
@@ -938,66 +938,66 @@ function useChapterFiveHotspot(id, item) {
 function talkToTowerElowen(item, inChamber) {
   if (item) {
     const reactions = {
-      stormglass:'The old beacons read the wind between stars. This shard still knows how.',
-      rootFilament:'The roots followed the repaired ward. They may bind the glass into a new needle.',
-      livingCompass:'Use it in the storm gate. I would rather face the truth than let another lock keep it for me.',
-      nightglass:'The mirror shows what symbols were before power taught them to lie.',
-      dawnPetal:'A new light from an ancient root. Join it to the nightglass.',
-      eclipseLens:'If that lens can show the crown its first shape, perhaps blood will no longer be its answer.'
+      stormglass: dialogue('elowen-stormglass'),
+      rootFilament: dialogue('elowen-root-filament'),
+      livingCompass: dialogue('elowen-living-compass'),
+      nightglass: dialogue('elowen-nightglass'),
+      dawnPetal: dialogue('elowen-dawn-petal'),
+      eclipseLens: dialogue('elowen-eclipse-lens')
     };
-    say([['Elowen',reactions[item] || 'Keep it close. The tower has mistaken possession for inheritance before.']]);
+    say([reactions[item] || dialogue('elowen-tower-default')]);
     return;
   }
   const f = state.flags;
   if (!f.metTowerElowen) {
     f.metTowerElowen = true;
     say([
-      ['Elowen','The archive hid my name. The mirror hid the rest of me. I chose both.'],
+      dialogue('elowen-chose-hiding'),
       ['Liora','Because the crown would have claimed you?'],
-      ['Elowen','Because everyone else already had. I would not inherit a throne built from stolen stars.']
+      dialogue('elowen-refused-throne')
     ]);
   } else if (!inChamber && !f.openedStormGate) {
-    say([['Elowen','The storm gate once followed a living compass. Bind the beacon’s glass with a thread from these roots.']]);
+    say([dialogue('elowen-living-compass-hint')]);
   } else if (inChamber && (!f.tookNightglass || !f.tookDawnPetal)) {
-    say([['Elowen','The mirror remembers what the crown was. The root-bloom carries a light untouched by kings.']]);
+    say([dialogue('elowen-mirror-bloom')]);
   } else if (inChamber && !f.madeEclipseLens) {
-    say([['Elowen','Set dawnlight inside the nightglass. Let neither one erase the other.']]);
+    say([dialogue('elowen-balance-lens')]);
   } else if (inChamber) {
-    say([['Elowen','Show the crown its first shape. If it still demands an heir, let the answer be no.']]);
+    say([dialogue('elowen-refuse-heir')]);
   } else {
-    say([['Elowen','The chamber is open. Whatever waits inside no longer gets to name me.']]);
+    say([dialogue('elowen-no-name')]);
   }
 }
 
 function talkToTowerWarden(item, inChamber) {
   if (item) {
     const reactions = {
-      stormglass:'Beacon glass once pointed our ships through weather no sailor could see.',
-      rootFilament:'The ward has given the roots a direction. Do not mistake that for obedience.',
-      livingCompass:'A compass that listens to living things. The old kings would have hated it.',
-      nightglass:'The first astronomers used nightglass to see through titles and other convenient lies.',
-      dawnPetal:'New light. The one inheritance the crown never learned to hoard.',
-      eclipseLens:'Hold it before the crown. Let the oldest truth judge the newest claim.'
+      stormglass: dialogue('warden-stormglass'),
+      rootFilament: dialogue('warden-root-filament'),
+      livingCompass: dialogue('warden-living-compass'),
+      nightglass: dialogue('warden-nightglass'),
+      dawnPetal: dialogue('warden-dawn-petal'),
+      eclipseLens: dialogue('warden-eclipse-lens')
     };
-    say([['Warden',reactions[item] || 'The tower remembers its relics more kindly than its rulers.']]);
+    say([reactions[item] || dialogue('warden-tower-default')]);
     return;
   }
   const f = state.flags;
   if (!f.metTowerWarden) {
     f.metTowerWarden = true;
     say([
-      ['Warden','I was Elowen’s royal astronomer. When she fled, the crown reached through the heavens to find her.'],
+      dialogue('warden-elowen-astronomer'),
       ['Liora','So you closed the sky.'],
-      ['Warden','I made one prison to prevent another. Mercy and cowardice often share a door.']
+      dialogue('warden-mercy-cowardice')
     ]);
   } else if (!inChamber && !f.openedStormGate) {
-    say([['Warden','Give the blind wind rose a living needle: skyglass for direction, root for memory.']]);
+    say([dialogue('warden-living-needle')]);
   } else if (inChamber && !f.madeEclipseLens) {
-    say([['Warden','Nightglass remembers the instrument beneath the crown. Dawnlight may make that memory visible.']]);
+    say([dialogue('warden-nightglass-memory')]);
   } else if (inChamber) {
-    say([['Warden','The crown was a compass before a king mistook direction for dominion. Make it remember.']]);
+    say([dialogue('warden-compass-before-crown')]);
   } else {
-    say([['Warden','Go on. I have kept this door closed long enough.']]);
+    say([dialogue('warden-door-open')]);
   }
 }
 
@@ -1021,7 +1021,7 @@ function useChapterSixHotspot(id, item) {
       state.flags.launchedFerry=true; removeItem('starSail'); magicEffect(72,35); chime(); save();
       say([
         ['Liora','The sail finds the mast by itself.'],
-        ['Elowen','And the old current remembers the Moonwake Garden.']
+        dialogue('elowen-current-remembers')
       ]);
     } else if (state.flags.launchedFerry && !item) {
       changeScene('moonwakeGarden');
@@ -1045,10 +1045,10 @@ function useChapterSixHotspot(id, item) {
       state.flags.openedBloom=true; removeItem('mooncall'); magicEffect(53,31); chime(); save();
       say([
         ['Liora','The bloom is answering.'],
-        ['Elowen','It was not feeding on the moon. It was keeping the moonseed hidden.'],
+        dialogue('elowen-moonseed-hidden'),
         ['Liora','Then the shadow was shelter, not hunger.'],
         ['Narration','The pearl-bright seed rises from the opening petals and takes its place among the stars. The great shadow withdraws from the moon.'],
-        ['Elowen','Liora—look behind it.'],
+        dialogue('elowen-look-behind'),
         ['Narration','Across the moon’s unveiled face runs a silver-black fracture wide enough to swallow a road. The restored compass points directly into it.']
       ], showChapterSixEnding);
     } else if (state.flags.openedBloom) {
@@ -1063,62 +1063,62 @@ function useChapterSixHotspot(id, item) {
 function talkToMoonwayElowen(item, inGarden) {
   if (item) {
     const reactions = {
-      cometClasp:'Comet metal held the old sails without weighing them down.',
-      starSilk:'Constellation silk catches the current between lights. Bind it with the comet clasp.',
-      starSail:'Set it on the ferry’s bare mast. The compass will give it a destination.',
-      moonReed:'Moonwake gardeners played reeds like these when a bloom refused the dawn.',
-      echoShell:'The shell remembers the tide that once taught this garden its songs.',
-      mooncall:'Play it for the eclipse flower. Do not command it—ask it to open.'
+      cometClasp: dialogue('elowen-comet-clasp'),
+      starSilk: dialogue('elowen-star-silk'),
+      starSail: dialogue('elowen-star-sail'),
+      moonReed: dialogue('elowen-moon-reed'),
+      echoShell: dialogue('elowen-echo-shell'),
+      mooncall: dialogue('elowen-mooncall')
     };
-    say([['Elowen',reactions[item] || 'Keep it. The roads beyond the city remember tools better than titles.']]);
+    say([reactions[item] || dialogue('elowen-moonway-default')]);
     return;
   }
   const f = state.flags;
   if (!f.metStarwayElowen) {
     f.metStarwayElowen = true;
     say([
-      ['Elowen','These ferries once carried wayfinders beyond every royal map. I gave the order to ground them.'],
+      dialogue('elowen-ferries-grounded'),
       ['Liora','To keep people from leaving?'],
-      ['Elowen','To keep the crown from turning every road into a leash.']
+      dialogue('elowen-roads-leash')
     ]);
   } else if (!inGarden && !f.launchedFerry) {
-    say([['Elowen','Comet metal held the sail. Constellation silk caught the current. Both survived here, if we can make them whole.']]);
+    say([dialogue('elowen-sail-hint')]);
   } else if (inGarden && (!f.tookReed || !f.tookShell)) {
     if (!f.metGardenElowen) f.metGardenElowen = true;
-    say([['Elowen','The flower closes tighter when we speak. Moonwake blooms once opened to a call carried by the tide.']]);
+    say([dialogue('elowen-bloom-tide-call')]);
   } else if (inGarden && !f.madeMooncall) {
-    say([['Elowen','The reed can give the tide a voice. Let the echo shell teach it how to return.']]);
+    say([dialogue('elowen-reed-shell')]);
   } else if (inGarden) {
-    say([['Elowen','Play the mooncall softly. Whatever the flower protects has slept through enough shouting.']]);
+    say([dialogue('elowen-play-softly')]);
   } else {
-    say([['Elowen','The ferry is ready. The road ahead belongs to us.']]);
+    say([dialogue('elowen-road-ours')]);
   }
 }
 
 function talkToSera(item) {
   if (item) {
     const reactions = {
-      bellShard:'A bell tongue without its bell. Repair its body before you ask the resonator to teach it.',
-      dreamdew:'Dreamdew reveals memories that dust has convinced itself to forget. The star map is very dusty.',
-      silverThread:'Archive silver. It was woven to bind sound, light, and overdue manuscripts.',
-      mendedChime:'Nicely repaired. Now uncover the waking sequence and let the resonator do its work.',
-      tunedChime:'Wren, Crown, River, Sun. The gate will remember that voice.'
+      bellShard: dialogue('sera-bell-shard'),
+      dreamdew: dialogue('sera-dreamdew'),
+      silverThread: dialogue('sera-silver-thread'),
+      mendedChime: dialogue('sera-mended-chime'),
+      tunedChime: dialogue('sera-tuned-chime')
     };
-    say([['Sera Vale',reactions[item] || 'That belongs to your journey, not my catalogue. A refreshing change.']]);
+    say([reactions[item] || dialogue('sera-default')]);
     return;
   }
   const f = state.flags;
   if (!f.metSera) {
     f.metSera = true;
-    say([['Sera Vale','A living visitor. The archive will be insufferably pleased with itself.'],['Liora','Are you the archivist?'],['Sera Vale','An echo of one. Sera Vale—assistant keeper, third class, permanently overdue.']]);
+    say([dialogue('sera-living-visitor'), ['Liora','Are you the archivist?'], dialogue('sera-introduction')]);
   } else if (!f.tookThread) {
-    say([['Sera Vale','The tapestry has been unraveling for eighty-seven years. At this point, one loose thread is practically a donation.']]);
+    say([dialogue('sera-tapestry')]);
   } else if (!f.revealedSong) {
-    say([['Sera Vale','The chart does not need cleaning. It needs to remember being clean. Dreams are good at that sort of contradiction.']]);
+    say([dialogue('sera-chart')]);
   } else if (!f.tunedChime) {
-    say([['Sera Vale','The resonator knows the revealed sequence. Give it a whole chime and a moment to be smug.']]);
+    say([dialogue('sera-resonator')]);
   } else {
-    say([['Sera Vale','Take the waking song to the gate. And if anyone asks, the archive was never asleep—merely indexing its eyelids.']]);
+    say([dialogue('sera-waking-song')]);
   }
 }
 
