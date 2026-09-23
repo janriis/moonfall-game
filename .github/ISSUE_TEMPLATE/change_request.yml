@@ -1,0 +1,49 @@
+name: 🔄 Change Request
+description: Request a modification to existing behavior
+labels: ["type:change-request", "status:triage", "priority:low"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🔄 Change Request
+        
+        Request a change to existing game behavior, UI, or code.
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: Related Chapter
+      description: Which chapter does this change affect?
+      options:
+        - Chapter 1 — The Fall
+        - Chapter 2 — The City of Bells
+        - Chapter 3 — The Hall of Names
+        - Chapter 4 — The Palace Below
+        - Chapter 5 — The Crown of Night
+        - Cross-chapter / Global
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Behavior
+      description: Describe how things work now.
+    validations:
+      required: true
+  - type: textarea
+    id: requested
+    attributes:
+      label: Requested Change
+      description: Describe what you want changed and why.
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - priority:low
+        - priority:medium
+        - priority:high
+      default: 0
+    validations:
+      required: true

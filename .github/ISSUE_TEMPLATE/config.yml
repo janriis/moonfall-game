@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Development Guide
+    url: https://github.com/janriis/moonfall-game/blob/main/DEVELOPMENT.md
+    about: Read the development status and known issues before filing a report.

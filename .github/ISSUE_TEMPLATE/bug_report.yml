@@ -1,0 +1,86 @@
+name: 🐛 Bug Report
+description: Report something that isn't working correctly
+labels: ["type:bug", "status:triage", "priority:medium"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🐛 Bug Report
+        
+        Thanks for taking the time to report a bug in Moonfall! Fill out the form below so we can reproduce and fix it.
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: Chapter
+      description: Which chapter does this bug occur in?
+      options:
+        - Chapter 1 — The Fall
+        - Chapter 2 — The City of Bells
+        - Chapter 3 — The Hall of Names
+        - Chapter 4 — The Palace Below
+        - Chapter 5 — The Crown of Night
+        - Cross-chapter / Global
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+      value: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / Console Output
+      description: If applicable, add screenshots or browser console errors.
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - priority:low
+        - priority:medium
+        - priority:high
+        - priority:critical
+      default: 1
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, device.
+      value: |
+        - Browser: 
+        - OS: 
+        - Device: 
+    validations:
+      required: false

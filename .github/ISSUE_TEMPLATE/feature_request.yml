@@ -1,0 +1,57 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+labels: ["type:feature", "status:triage", "priority:low"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ✨ Feature Request
+        
+        Suggest a new feature or enhancement for Moonfall.
+  - type: dropdown
+    id: chapter
+    attributes:
+      label: Related Chapter
+      description: Which chapter is this feature for?
+      options:
+        - Chapter 1 — The Fall
+        - Chapter 2 — The City of Bells
+        - Chapter 3 — The Hall of Names
+        - Chapter 4 — The Palace Below
+        - Chapter 5 — The Crown of Night
+        - Cross-chapter / Global
+        - Future content
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: A clear description of the feature you'd like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What problem does this feature solve? Why do you want it?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How do you imagine this working?
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - priority:low
+        - priority:medium
+        - priority:high
+      default: 0
+    validations:
+      required: true

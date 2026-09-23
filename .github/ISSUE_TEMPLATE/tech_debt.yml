@@ -1,0 +1,35 @@
+name: 🛠️ Tech Debt / Maintenance
+description: Code quality, refactoring, dependencies, tooling improvements
+labels: ["type:tech-debt", "status:triage", "priority:low"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🛠️ Tech Debt / Maintenance
+        
+        Report technical debt, maintenance needs, or code quality issues.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs improvement and why?
+    validations:
+      required: true
+  - type: textarea
+    id: affected
+    attributes:
+      label: Affected Files / Areas
+      description: List the files or code areas affected.
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - priority:low
+        - priority:medium
+        - priority:high
+      default: 0
+    validations:
+      required: true

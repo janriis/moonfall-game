@@ -1,0 +1,24 @@
+name: 📚 Documentation
+description: Improvements to docs, README, DEVELOPMENT.md, or inline comments
+labels: ["type:documentation", "status:triage", "priority:low"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📚 Documentation
+        
+        Report missing, outdated, or incorrect documentation.
+  - type: textarea
+    id: description
+    attributes:
+      label: What needs documenting?
+      description: Describe what documentation is missing or needs updating.
+    validations:
+      required: true
+  - type: textarea
+    id: location
+    attributes:
+      label: Location
+      description: Which file/section needs documentation?
+    validations:
+      required: false
