@@ -19,7 +19,9 @@ body:
         - Chapter 3 — The Hall of Names
         - Chapter 4 — The Palace Below
         - Chapter 5 — The Crown of Night
+        - Chapter 6 — Beyond the Crown
         - Cross-chapter / Global
+        - Future content
     validations:
       required: true
   - type: textarea

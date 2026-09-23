@@ -8,6 +8,18 @@ The game is a complete browser-playable vertical slice through six internal stor
 
 The next development session should follow the compass into the newly revealed moon wound, as described under **Resume here next session**.
 
+## GitHub issue workflow
+
+Every new chapter, feature, and bug fix must have a GitHub issue before implementation begins. Use the matching issue template and keep the issue as the source of truth for scope and progress.
+
+1. Create the issue before changing code or assets. Record the intended outcome, scope, acceptance criteria, and verification plan.
+2. Keep its checklist and comments current at meaningful milestones, including implementation, documentation, and testing.
+3. Create a separate issue when an unrelated feature or bug is discovered instead of silently adding it to the current scope.
+4. Reference the issue number in commits and pull requests. Use a closing reference such as `Closes #123` only in the final implementation commit.
+5. Close the issue only after the work, documentation, verification, commit, and GitHub push have all succeeded.
+
+The chapter template also covers story beats, rooms, puzzles, save migration, voices, artwork, and offline assets so a playable chapter can be followed from outline through release.
+
 ## Playable route
 
 There are twelve finished rooms:

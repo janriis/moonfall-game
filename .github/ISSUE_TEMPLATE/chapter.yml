@@ -1,0 +1,75 @@
+name: 🌙 New Chapter
+description: Plan and track a new playable Moonfall chapter
+title: "[Chapter] "
+labels: ["type:feature", "status:triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 🌙 New Chapter
+
+        Create this issue before changing chapter code or assets. Keep its checklist and progress comments current until the verified chapter is pushed.
+  - type: input
+    id: chapter
+    attributes:
+      label: Chapter number and working title
+      placeholder: "Chapter 7 — The Moon Wound"
+    validations:
+      required: true
+  - type: textarea
+    id: story
+    attributes:
+      label: Story goal
+      description: Describe the opening state, central reveal, character development, and ending beat.
+    validations:
+      required: true
+  - type: textarea
+    id: rooms
+    attributes:
+      label: Rooms and artwork
+      description: List the planned scenes, atmosphere, hotspots, characters, and required original assets.
+    validations:
+      required: true
+  - type: textarea
+    id: gameplay
+    attributes:
+      label: Puzzles and interactions
+      description: Outline inventory items, combinations, NPC interactions, hints, and completion conditions.
+    validations:
+      required: true
+  - type: textarea
+    id: continuity
+    attributes:
+      label: State, saves, and continuity
+      description: Note fresh state, completion flags, incoming save migration, Continue behavior, and the transition to the next chapter.
+    validations:
+      required: true
+  - type: textarea
+    id: production
+    attributes:
+      label: Dialogue, voices, and offline assets
+      description: List dialogue/voice work, manifest changes, service-worker cache updates, and any asset-generation needs.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use a checklist covering the complete playable route and expected player-facing behavior.
+      value: |
+        - [ ] Story and room flow are implemented
+        - [ ] Puzzles, hints, and inventory interactions work
+        - [ ] Save migration and Continue behavior work
+        - [ ] Dialogue and voice manifests are complete
+        - [ ] Artwork and offline cache entries are complete
+        - [ ] DEVELOPMENT.md is updated
+        - [ ] Automated checks and browser playthrough pass
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification plan
+      description: Record the automated commands, browsers, save states, and manual routes that must be tested before closing the issue.
+    validations:
+      required: true
