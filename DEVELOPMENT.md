@@ -4,13 +4,13 @@ Last updated: 2026-09-23
 
 ## Current phase
 
-The game is a complete browser-playable vertical slice through five internal story chapters. Players never see chapter numbers: each part flows into the next as a new scene. The current build ends after Liora, Elowen, and the Warden restore the Crown of Night to its original purpose as a celestial compass.
+The game is a complete browser-playable vertical slice through six internal story chapters. Players never see chapter numbers: each part flows into the next as a new scene. The current build ends after Liora and Elowen follow the restored celestial compass beyond Lantern City, release a sheltered moonseed, and discover a fracture across the moon.
 
-The next development session should follow the new star-road beyond Lantern City toward the shadow crossing the moon, as described under **Resume here next session**.
+The next development session should follow the compass into the newly revealed moon wound, as described under **Resume here next session**.
 
 ## Playable route
 
-There are ten finished rooms:
+There are twelve finished rooms:
 
 1. **Moonfall Glade** — meet Mosswick, collect a glowcap and moonwater, make a gleam lantern, and recover the star key.
 2. **The Forgotten Orrery** — unlock the mechanism, fill its crystal basin, and return the fallen light to the sky.
@@ -22,8 +22,10 @@ There are ten finished rooms:
 8. **The Heart Vault** — meet the Warden, combine star ash with living root resin, and rewrite the fractured celestial ward.
 9. **The Rootspire Approach** — learn that Elowen is the Crown's lost heir, bind stormglass with living root, and use the compass to open the highest tower.
 10. **The Crown Chamber** — combine nightglass with a dawn petal, reveal the circlet's first design, and free its captive constellations without enthroning Elowen.
+11. **The Starway Crossing** — leave the Warden to help the waking city, repair an ancient star-ferry sail, and follow the celestial compass beyond every royal map.
+12. **The Moonwake Garden** — combine a singing moon reed with an echo shell, gently open the eclipse flower, and learn that its shadow protected a moonseed from the fracture behind it.
 
-The completed story beat is: Elowen reveals that she chose to erase and hide her name rather than inherit a throne built from stolen stars. The Warden admits that he closed the sky when the Crown reached through the heavens to find her. Liora uses an eclipse lens to show the Crown that it was originally a compass, releasing its constellations and leaving Elowen free to keep her own name.
+The completed story beat is: the Warden remains in Lantern City to help it live beneath an open sky, while Liora and Elowen take a repaired star-ferry to the Moonwake Garden. The darkness crossing the moon proves to be the sheltering shadow of an eclipse flower. When a mooncall coaxes it open, its protected seed joins the restored stars and reveals a silver-black wound across the moon. The celestial compass points directly inside.
 
 ## Core systems
 
@@ -45,10 +47,11 @@ The completed story beat is: Elowen reveals that she chose to erase and hide her
 - `chapterThreeState(sound)` — Lantern Court and Hall of Names
 - `chapterFourState(sound)` — Palace Atrium and Heart Vault
 - `chapterFiveState(sound)` — Rootspire Approach and Crown Chamber
+- `chapterSixState(sound)` — Starway Crossing and Moonwake Garden
 
 Scene transitions preserve the sound setting but deliberately start a new inventory and flag set. Older completed saves are forwarded into the next playable scene when Continue is selected, including builds that stopped after the Hall of Names.
 
-Important completion flags are `chapterOneComplete` through `chapterFiveComplete`. The final flag reopens the current ending card on Continue. Completed Chapter IV saves from the previous build migrate directly into the Rootspire Approach.
+Important completion flags are `chapterOneComplete` through `chapterSixComplete`. The final flag reopens the current ending card on Continue. Completed Chapter V saves from the previous build migrate directly into the Starway Crossing.
 
 ## NPC voices
 
@@ -90,12 +93,14 @@ The newest generated art is:
 - `assets/warden.png`
 - `assets/rootspire-approach.png`
 - `assets/crown-chamber.png`
+- `assets/starway-crossing.png`
+- `assets/moonwake-garden.png`
 
 All raster art was created for Moonfall from original prompts. No art from the games that inspired its presentation is included.
 
 ## Verification
 
-Current build status (2026-09-23): `npm run check` passes, all 101 manifest voice files exist, and the tower sequence has completed a browser playthrough through **A Sky Without Heirs**. Migration from a Chapter IV completion save into the Rootspire Approach works, both tower puzzles complete normally, and Continue reopens the Chapter V ending after a reload.
+Current build status (2026-09-23): `npm run check` passes, all 120 manifest voice files exist, and the moon-shadow sequence has completed a browser playthrough through **The Wound Above**. Migration from a Chapter V completion save into the Starway Crossing works, both new puzzles complete normally, and Continue reopens the Chapter VI ending after a reload.
 
 Run these checks before handing off a build:
 
@@ -111,16 +116,16 @@ In the browser, verify a new game, Continue, room narration, return visits, move
 - Voiced dialogue is intentionally duplicated between `game.js` and `voice-lines.js`; punctuation changes can silently break lookup.
 - The service-worker version and file list are updated manually.
 - Gameplay does not yet have automated end-to-end tests.
-- The current story stops when the restored celestial compass reveals a star-road beyond the city toward a shadow crossing the moon.
+- The current story stops when the moonseed reveals a fracture across the moon and the restored celestial compass points inside it.
 - Google Fonts are optional network resources. Offline play uses the serif fallback.
 
 ## Resume here next session
 
-Start with the next seamless scene after the Crown Chamber:
+Start with the next seamless scene after the Moonwake Garden:
 
-1. Decide what is casting the shadow across the moon and why the restored compass points toward it.
-2. Outline a two-room route beyond Lantern City, beginning with the star-road and ending at a location tied to the moon's missing light.
-3. Decide whether the Warden travels with Liora and Elowen or remains behind to repair the city's celestial instruments.
-4. Create the new environment art and any new character art required by the reveal.
+1. Decide what fractured the moon, what survives inside the wound, and why the original celestial compass recognizes it as a road.
+2. Outline a two-room lunar interior arc, beginning at the wound's threshold and ending at the source of the missing moonlight.
+3. Decide whether the moonseed travels with Liora and Elowen as a light, guide, or new character.
+4. Create the new lunar environment art and any character or creature art required by the reveal.
 5. Add first-visit narration, hotspots, fresh chapter state, puzzle interactions, contextual hints, dialogue, voices, and offline assets.
-6. Preserve the seamless transition, migrate Chapter V completion saves forward, and update this document's route and resume point.
+6. Preserve the seamless transition, migrate Chapter VI completion saves forward, and update this document's route and resume point.

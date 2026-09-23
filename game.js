@@ -7,7 +7,8 @@ const SCENE_NAMES = {
   glade:'Moonfall Glade', observatory:'The Forgotten Orrery', causeway:"Dreamer's Causeway",
   archive:'The Lantern Archive', lanternCourt:'Lantern Court', hallOfNames:'The Hall of Names',
   palaceAtrium:'The Palace Atrium', heartVault:'The Heart Vault',
-  rootspireApproach:'The Rootspire Approach', crownChamber:'The Crown Chamber'
+  rootspireApproach:'The Rootspire Approach', crownChamber:'The Crown Chamber',
+  starwayCrossing:'The Starway Crossing', moonwakeGarden:'The Moonwake Garden'
 };
 const PORTRAITS = {
   Liora:'assets/liora.png', Mosswick:'assets/mosswick.png', 'Sera Vale':'assets/sera.png',
@@ -53,6 +54,14 @@ const ROOM_DESCRIPTIONS = {
   crownChamber: [
     ['Narration','The Crown Chamber stands open to the whole night. A black-and-gold circlet floats above the central dais inside an orrery of captive stars, while a fractured nightglass mirror and a single dawn root-bloom face one another across the polished floor.'],
     ['Narration','Here the wind is perfectly still. Every returning star casts a thread of gold toward the crown, and every thread pulls faintly toward Elowen, waiting for her to become an answer she chose long ago to refuse.']
+  ],
+  starwayCrossing: [
+    ['Narration','The Starway Crossing hangs beyond Lantern City above an endless silver cloud sea. A celestial ferry waits beside the luminous road with its mast bare, while a broken comet clasp and a torn length of constellation silk gleam at opposite edges of the landing.'],
+    ['Narration','The air is thin, cold, and startlingly clean. Each tile beneath Liora’s boots answers with a distant note, and the restored compass turns steadily toward a petal-shaped darkness crossing the moon.']
+  ],
+  moonwakeGarden: [
+    ['Narration','The Moonwake Garden rests on a forgotten island of stone beneath the enormous moon. A closed eclipse flower rises at its center around a pearl-bright seed, flanked by a pool of hollow silver reeds and an ancient shrine shaped like a spiral shell.'],
+    ['Narration','No wind reaches this place, yet violet leaves drift across the floor. The flower’s vast shadow lies over the moon like a sheltering hand, and somewhere inside its folded petals a small light keeps time with Liora’s heartbeat.']
   ]
 };
 
@@ -82,7 +91,13 @@ const ITEMS = {
   livingCompass: { name: 'Living compass', art: '✥', description: 'Stormglass bound in a living root. Its needle points toward a choice rather than north.' },
   nightglass: { name: 'Nightglass shard', art: '◆', description: 'Dark mirror-glass that reflects what a thing was before anyone named it.' },
   dawnPetal: { name: 'Dawn petal', art: '❋', description: 'A warm root-bloom petal holding the first color of morning.' },
-  eclipseLens: { name: 'Eclipse lens', art: '◐', description: 'Nightglass and dawnlight held in balance. It reveals the shape beneath a symbol.' }
+  eclipseLens: { name: 'Eclipse lens', art: '◐', description: 'Nightglass and dawnlight held in balance. It reveals the shape beneath a symbol.' },
+  cometClasp: { name: 'Comet clasp', art: '⌾', description: 'A moon-silver fitting made to hold a sail against winds between stars.' },
+  starSilk: { name: 'Constellation silk', art: '⋇', description: 'A weightless blue fabric threaded with tiny moving points of light.' },
+  starSail: { name: 'Star-sail', art: '⛵', description: 'Constellation silk secured by comet metal. It fills whenever the moon is ahead.' },
+  moonReed: { name: 'Moon reed', art: '𝄞', description: 'A hollow silver reed. Even silence leaves a note inside it.' },
+  echoShell: { name: 'Echo shell', art: '◔', description: 'A spiral shell carved to remember a song after its singer is gone.' },
+  mooncall: { name: 'Mooncall', art: '♫', description: 'A reed flute nested in an echo shell. It carries one patient note without end.' }
 };
 
 const freshState = () => ({
@@ -120,6 +135,13 @@ const chapterFiveState = sound => ({
   seenRooms: [], started: true, sound
 });
 
+const chapterSixState = sound => ({
+  chapter: 6,
+  scene: 'starwayCrossing', mode: 'use', selected: null, inventory: [],
+  flags: { tookClasp:false, tookSilk:false, madeSail:false, launchedFerry:false, tookReed:false, tookShell:false, madeMooncall:false, openedBloom:false, metStarwayElowen:false, metGardenElowen:false },
+  seenRooms: [], started: true, sound
+});
+
 let state = freshState();
 let dialogueQueue = [];
 let dialogueCallback = null;
@@ -144,7 +166,8 @@ function showScreen(id) {
 function begin(isContinue = false) {
   if (isContinue && loadState()) state = loadState();
   else { state = freshState(); state.started = true; save(); }
-  if (isContinue && state.chapterFiveComplete) { showChapterFiveEnding(); return; }
+  if (isContinue && state.chapterSixComplete) { showChapterSixEnding(); return; }
+  if (isContinue && state.chapterFiveComplete && state.chapter === 5) { transitionToChapterSix(); return; }
   if (isContinue && state.chapterFourComplete && state.chapter === 4) { transitionToChapterFive(); return; }
   if (isContinue && state.chapterThreeComplete && state.chapter === 3) { transitionToChapterFour(); return; }
   if (isContinue && state.chapterTwoComplete && state.chapter === 2) { transitionToChapterThree(); return; }
@@ -249,6 +272,29 @@ function enterChapterFiveScene() {
   ]);
 }
 
+function beginChapterSix() {
+  prepareChapterSix();
+  enterChapterSixScene();
+}
+
+function prepareChapterSix() {
+  const sound = state.sound;
+  state = chapterSixState(sound);
+  save();
+  showScreen('play-screen');
+  render();
+  placeHeroForScene();
+  ensureAudio();
+}
+
+function enterChapterSixScene() {
+  describeRoom(state.scene, [
+    ['Warden','I will remain. Lantern City has forgotten how to live beneath an open sky.'],
+    ['Elowen','And the compass has chosen a road.'],
+    ['Liora','Keep one light burning. We will follow it home.']
+  ]);
+}
+
 function runStoryTransition(message, prepare, enter) {
   $('#story-transition p').textContent = message;
   const transition = $('#story-transition');
@@ -289,6 +335,12 @@ function transitionToChapterFive() {
   runStoryTransition('Above them, the highest tower remembers an heir.', prepareChapterFive, enterChapterFiveScene);
 }
 
+function transitionToChapterSix() {
+  state.chapterFiveComplete = true;
+  save();
+  runStoryTransition('Beyond the city, a road of stars remembers the moon.', prepareChapterSix, enterChapterSixScene);
+}
+
 function describeRoom(scene, followingLines = []) {
   state.seenRooms ||= [];
   const firstVisit = !state.seenRooms.includes(scene);
@@ -319,16 +371,18 @@ function placeHeroForScene(fromScene = null) {
   const returningToLanternCourt = state.scene === 'lanternCourt' && fromScene === 'hallOfNames';
   const returningToPalace = state.scene === 'palaceAtrium' && fromScene === 'heartVault';
   const returningToRootspire = state.scene === 'rootspireApproach' && fromScene === 'crownChamber';
+  const returningToStarway = state.scene === 'starwayCrossing' && fromScene === 'moonwakeGarden';
   const positions = {
     glade: returningToGlade ? 88 : 57, observatory:18,
     causeway:returningToCauseway ? 89 : 52, archive:10,
     lanternCourt:returningToLanternCourt ? 90 : 48, hallOfNames:13,
     palaceAtrium:returningToPalace ? 50 : 14, heartVault:12,
-    rootspireApproach:returningToRootspire ? 73 : 16, crownChamber:15
+    rootspireApproach:returningToRootspire ? 73 : 16, crownChamber:15,
+    starwayCrossing:returningToStarway ? 79 : 16, moonwakeGarden:14
   };
   const x = positions[state.scene];
   hero.classList.remove('walking', 'arriving');
-  hero.classList.toggle('face-left', returningToGlade || returningToCauseway || returningToLanternCourt || returningToPalace || returningToRootspire);
+  hero.classList.toggle('face-left', returningToGlade || returningToCauseway || returningToLanternCourt || returningToPalace || returningToRootspire || returningToStarway);
   hero.style.setProperty('--walk-duration', '0ms');
   hero.style.setProperty('--hero-x', `${x}%`);
 }
@@ -394,6 +448,16 @@ function combine(a, b) {
     state.flags.madeEclipseLens = true; state.selected = null;
     magicEffect(86,82); chime();
     say([['Liora','Night holds the dawn without swallowing it. The glass is showing shapes beneath their names.']]);
+  } else if (pair.has('cometClasp') && pair.has('starSilk')) {
+    removeItem('cometClasp'); removeItem('starSilk'); addItem('starSail');
+    state.flags.madeSail = true; state.selected = null;
+    magicEffect(86,82); chime();
+    say([['Liora','The clasp catches every silver thread. The sail is weightless, but it is already pulling toward the moon.']]);
+  } else if (pair.has('moonReed') && pair.has('echoShell')) {
+    removeItem('moonReed'); removeItem('echoShell'); addItem('mooncall');
+    state.flags.madeMooncall = true; state.selected = null;
+    magicEffect(86,82); chime();
+    say([['Liora','The reed settles into the shell. One low note circles inside it, waiting to be released.']]);
   } else {
     state.selected = null; say([['Liora', `Those two have very little to say to each other.`]]);
   }
@@ -485,6 +549,16 @@ function inspect(id) {
     openSky:'For the first time, the sky above the city looks deep instead of sealed. Still, whole constellations remain trapped in the crown.',
     chamberWarden:'The Warden watches the crown with the exhausted attention of an astronomer facing his oldest error.',
     chamberElowen:'Elowen stands before her inheritance and looks only like herself.',
+    cityArch:'Lantern City glows behind them, no longer asleep. One high window belongs to the Warden now.',
+    cometClasp: state.flags.tookClasp ? 'The damaged pedestal holds only a comet-shaped impression.' : 'A moon-silver clasp lies loose inside the shattered wayfinder instrument.',
+    starSilk: state.flags.tookSilk ? 'A few harmless sparks cling to the empty arch.' : 'Constellation silk has snagged high on the arch, rippling in a wind Liora cannot feel.',
+    starFerry: state.flags.launchedFerry ? 'The restored ferry waits with its bright sail turned toward the garden.' : 'The old vessel is intact, but its bare mast cannot catch the current flowing toward the moon.',
+    starwayElowen:'Elowen watches the road ahead with the wonder of someone who once ordered every ferry grounded.',
+    moonReeds: state.flags.tookReed ? 'The remaining reeds hum together around one quiet absence.' : 'Hollow silver reeds sing whenever moonlight touches the pool.',
+    echoShellShrine: state.flags.tookShell ? 'The spiral cradle is empty, but the shrine still returns every footstep as music.' : 'A pale echo shell rests in the shrine’s spiral center, holding the memory of a tide.',
+    eclipseBloom: state.flags.openedBloom ? 'The vast petals are open. At their center, an empty cradle points toward the wounded moon.' : 'The eclipse flower folds around a pearl-bright seed. Its shadow feels protective, not hungry.',
+    moonScar: state.flags.openedBloom ? 'Without the flower’s shadow, a silver-black fracture is visible across the moon.' : 'The flower’s silhouette hides the center of the moon. Light gathers around every petal.',
+    gardenElowen:'Elowen listens to the closed flower as carefully as she once listened at the memory mirror.',
     mosswick:'A forest keeper, judging by the leaves, bells, and complete lack of ordinary pockets.',
     sera:'She is translucent at the edges, but her expression is considerably more solid.',
     elowen: state.flags.freedElowen ? 'Elowen is older than Liora remembers, and real enough to cast a shadow.' : 'A woman waits inside the mirror, lit at the edges like a memory refusing to fade.'
@@ -495,7 +569,8 @@ function inspect(id) {
 function useHotspot(id) {
   const item = state.selected;
   state.selected = null;
-  if (id === 'observatory' || id === 'glade' || id === 'archive' || id === 'causeway' || id === 'lanternCourt' || id === 'hallOfNames' || id === 'palaceAtrium' || id === 'rootspireApproach') { changeScene(id); return; }
+  if (id === 'observatory' || id === 'glade' || id === 'archive' || id === 'causeway' || id === 'lanternCourt' || id === 'hallOfNames' || id === 'palaceAtrium' || id === 'rootspireApproach' || id === 'starwayCrossing') { changeScene(id); return; }
+  if (state.chapter === 6) { useChapterSixHotspot(id, item); render(); return; }
   if (state.chapter === 5) { useChapterFiveHotspot(id, item); render(); return; }
   if (state.chapter === 4) { useChapterFourHotspot(id, item); render(); return; }
   if (state.chapter === 3) { useChapterThreeHotspot(id, item); render(); return; }
@@ -926,6 +1001,100 @@ function talkToTowerWarden(item, inChamber) {
   }
 }
 
+function useChapterSixHotspot(id, item) {
+  if (id === 'starwayElowen' || id === 'gardenElowen') {
+    talkToMoonwayElowen(item, id === 'gardenElowen');
+  } else if (id === 'cometClasp') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookClasp) {
+      state.flags.tookClasp=true; addItem('cometClasp'); chime();
+      say([['Liora','The broken instrument lets go of one comet clasp. It is cold, but much too light to be ordinary metal.']]);
+    } else say([['Liora','Only the empty comet-shaped cradle remains.']]);
+  } else if (id === 'starSilk') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookSilk) {
+      state.flags.tookSilk=true; addItem('starSilk'); chime();
+      say([['Liora','The silk slips free without tearing. Its little stars rearrange themselves around my hands.']]);
+    } else say([['Liora','The arch holds only a few fading sparks now.']]);
+  } else if (id === 'starFerry') {
+    if (item === 'starSail' && !state.flags.launchedFerry) {
+      state.flags.launchedFerry=true; removeItem('starSail'); magicEffect(72,35); chime(); save();
+      say([
+        ['Liora','The sail finds the mast by itself.'],
+        ['Elowen','And the old current remembers the Moonwake Garden.']
+      ]);
+    } else if (state.flags.launchedFerry && !item) {
+      changeScene('moonwakeGarden');
+    } else if (state.flags.launchedFerry) wrongItem(item,id);
+    else if (item) wrongItem(item,id);
+    else say([['Liora','The ferry has a mast and a moonward keel, but nothing left to catch the star-current.']]);
+  } else if (id === 'moonReeds') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookReed) {
+      state.flags.tookReed=true; addItem('moonReed'); chime();
+      say([['Liora','One reed comes free with a note still trembling inside it.']]);
+    } else say([['Liora','The pool needs the rest of its silver choir.']]);
+  } else if (id === 'echoShellShrine') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookShell) {
+      state.flags.tookShell=true; addItem('echoShell'); chime();
+      say([['Liora','The shell is empty, yet I can hear a distant tide turning inside it.']]);
+    } else say([['Liora','The shrine repeats the tide-song the shell left behind.']]);
+  } else if (id === 'eclipseBloom') {
+    if (item === 'mooncall' && !state.flags.openedBloom) {
+      state.flags.openedBloom=true; removeItem('mooncall'); magicEffect(53,31); chime(); save();
+      say([
+        ['Liora','The bloom is answering.'],
+        ['Elowen','It was not feeding on the moon. It was keeping the moonseed hidden.'],
+        ['Liora','Then the shadow was shelter, not hunger.'],
+        ['Narration','The pearl-bright seed rises from the opening petals and takes its place among the stars. The great shadow withdraws from the moon.'],
+        ['Elowen','Liora—look behind it.'],
+        ['Narration','Across the moon’s unveiled face runs a silver-black fracture wide enough to swallow a road. The restored compass points directly into it.']
+      ], showChapterSixEnding);
+    } else if (state.flags.openedBloom) {
+      say([['Liora','The flower is only a flower now. Its empty cradle faces the wound in the moon.']]);
+    } else if (item) wrongItem(item,id);
+    else say([['Liora','The petals close tighter at every loud sound. It may open for a gentler call.']]);
+  } else if (id === 'cityArch' || id === 'moonScar') {
+    inspect(id);
+  }
+}
+
+function talkToMoonwayElowen(item, inGarden) {
+  if (item) {
+    const reactions = {
+      cometClasp:'Comet metal held the old sails without weighing them down.',
+      starSilk:'Constellation silk catches the current between lights. Bind it with the comet clasp.',
+      starSail:'Set it on the ferry’s bare mast. The compass will give it a destination.',
+      moonReed:'Moonwake gardeners played reeds like these when a bloom refused the dawn.',
+      echoShell:'The shell remembers the tide that once taught this garden its songs.',
+      mooncall:'Play it for the eclipse flower. Do not command it—ask it to open.'
+    };
+    say([['Elowen',reactions[item] || 'Keep it. The roads beyond the city remember tools better than titles.']]);
+    return;
+  }
+  const f = state.flags;
+  if (!f.metStarwayElowen) {
+    f.metStarwayElowen = true;
+    say([
+      ['Elowen','These ferries once carried wayfinders beyond every royal map. I gave the order to ground them.'],
+      ['Liora','To keep people from leaving?'],
+      ['Elowen','To keep the crown from turning every road into a leash.']
+    ]);
+  } else if (!inGarden && !f.launchedFerry) {
+    say([['Elowen','Comet metal held the sail. Constellation silk caught the current. Both survived here, if we can make them whole.']]);
+  } else if (inGarden && (!f.tookReed || !f.tookShell)) {
+    if (!f.metGardenElowen) f.metGardenElowen = true;
+    say([['Elowen','The flower closes tighter when we speak. Moonwake blooms once opened to a call carried by the tide.']]);
+  } else if (inGarden && !f.madeMooncall) {
+    say([['Elowen','The reed can give the tide a voice. Let the echo shell teach it how to return.']]);
+  } else if (inGarden) {
+    say([['Elowen','Play the mooncall softly. Whatever the flower protects has slept through enough shouting.']]);
+  } else {
+    say([['Elowen','The ferry is ready. The road ahead belongs to us.']]);
+  }
+}
+
 function talkToSera(item) {
   if (item) {
     const reactions = {
@@ -976,7 +1145,13 @@ function wrongItem(item, target) {
     'nightglass:crownDais':'The shard sees the crown’s first shape, but there is not enough light to reveal it.',
     'dawnPetal:crownDais':'The petal brings new light, but the crown reflects only its own old story.',
     'livingCompass:crownDais':'The compass has already found the chamber. It cannot reveal what the crown used to be.',
-    'eclipseLens:stormGate':'The gate needs direction, not revelation.'
+    'eclipseLens:stormGate':'The gate needs direction, not revelation.',
+    'cometClasp:starFerry':'The clasp fits the mast, but bare metal cannot catch a current.',
+    'starSilk:starFerry':'The silk reaches the mast, but the star-current tears it free without a proper clasp.',
+    'moonReed:eclipseBloom':'The reed makes one gentle note, but it fades before the flower can answer.',
+    'echoShell:eclipseBloom':'The shell remembers a song, but it has no breath with which to sing it.',
+    'starSail:eclipseBloom':'The sail belongs to open currents, not closed petals.',
+    'mooncall:starFerry':'The ferry needs a sail, not a serenade.'
   };
   say([['Liora', lines[`${item}:${target}`] || `The ${ITEMS[item].name.toLowerCase()} does not belong there.`]]);
 }
@@ -1064,16 +1239,32 @@ function showChapterFourEnding() {
 }
 
 function showChapterFiveEnding() {
-  state.chapterFiveComplete = true; save();
+  transitionToChapterSix();
+}
+
+function showChapterSixEnding() {
+  state.chapterSixComplete = true; save();
   setEnding({
-    eyebrow:'The crown remembers', title:'A Sky Without Heirs',
-    text:'The circlet opens into a compass of golden rings and releases the constellations it once held captive. Elowen keeps her name, the Warden sees the heavens move freely, and a new star-road points beyond the city toward the shadow crossing the moon.',
-    end:'To be continued', button:'Play from the beginning', className:'chapter-five-ending', action:()=>begin(false)
+    eyebrow:'The shadow was shelter', title:'The Wound Above',
+    text:'The moonseed rises into the restored sky and the eclipse flower releases its gentle shadow. Behind it, a fracture opens across the moon—and the celestial compass points straight into the silver-black wound.',
+    end:'To be continued', button:'Play from the beginning', className:'chapter-six-ending', action:()=>begin(false)
   });
 }
 
 function hint() {
   const f=state.flags; let msg;
+  if(state.chapter===6){
+    if(!f.tookClasp) msg='The broken wayfinder pedestal still holds a loose comet clasp.';
+    else if(!f.tookSilk) msg='Constellation silk is caught on the arch at the far right.';
+    else if(state.inventory.includes('cometClasp')&&state.inventory.includes('starSilk')) msg='Secure the constellation silk with the comet clasp.';
+    else if(!f.launchedFerry) msg='Fit the finished star-sail to the ferry’s bare mast.';
+    else if(state.scene==='starwayCrossing') msg='The restored star-ferry can carry you to the Moonwake Garden.';
+    else if(!f.tookReed) msg='The tide pool holds hollow reeds that sing in moonlight.';
+    else if(!f.tookShell) msg='An echo shell rests inside the spiral shrine.';
+    else if(state.inventory.includes('moonReed')&&state.inventory.includes('echoShell')) msg='Join the singing reed to the echo shell.';
+    else msg='Play the mooncall for the closed eclipse flower.';
+    toast(msg,4000); $('#scene').classList.add('show-hotspots'); setTimeout(()=>$('#scene').classList.remove('show-hotspots'),1800); return;
+  }
   if(state.chapter===5){
     if(!f.tookStormglass) msg='The cracked beacon still holds one loose shard of skyglass.';
     else if(!f.tookRootFilament) msg='A golden filament has come loose from the roots beside the gate.';
@@ -1147,7 +1338,7 @@ function footstepSequence(duration){
   for(let i=0;i<steps;i++)tone(i%2?82:96,.045,'triangle',.007,.12+i*(duration/steps)/1000);
 }
 function chime(){[523,659,784,1046].forEach((f,i)=>tone(f,.55,'sine',.035,i*.09));}
-function ambientTone(){tone(state.scene==='glade'?174:state.scene==='hallOfNames'?196:state.scene==='heartVault'?147:state.scene==='rootspireApproach'?165:state.scene==='crownChamber'?247:220,.9,'sine',.018);}
+function ambientTone(){tone(state.scene==='glade'?174:state.scene==='hallOfNames'?196:state.scene==='heartVault'?147:state.scene==='rootspireApproach'?165:state.scene==='crownChamber'?247:state.scene==='starwayCrossing'?294:state.scene==='moonwakeGarden'?207:220,.9,'sine',.018);}
 function toggleSound(){state.sound=!state.sound;if(state.sound){ensureAudio();chime();}else stopVoice();render();toast(state.sound?'Sound on':'Sound off');}
 
 function seedFireflies(){const box=$('#fireflies');for(let i=0;i<18;i++){const f=document.createElement('i');f.className='firefly';f.style.left=`${7+Math.random()*86}%`;f.style.top=`${22+Math.random()*65}%`;f.style.setProperty('--d',`${2+Math.random()*4}s`);f.style.animationDelay=`${-Math.random()*5}s`;box.append(f);}}
@@ -1163,7 +1354,7 @@ $('#hint-button').addEventListener('click',hint);
 $('#sound-button').addEventListener('click',toggleSound); $('#title-sound').addEventListener('click',toggleSound);
 $('#menu-button').addEventListener('click',()=>$('#menu-dialog').showModal());
 $('#resume-button').addEventListener('click',()=>$('#menu-dialog').close());
-$('#restart-button').addEventListener('click',()=>{$('#menu-dialog').close();state.chapter===5?beginChapterFive():state.chapter===4?beginChapterFour():state.chapter===3?beginChapterThree():state.chapter===2?beginChapterTwo():begin(false);});
+$('#restart-button').addEventListener('click',()=>{$('#menu-dialog').close();state.chapter===6?beginChapterSix():state.chapter===5?beginChapterFive():state.chapter===4?beginChapterFour():state.chapter===3?beginChapterThree():state.chapter===2?beginChapterTwo():begin(false);});
 $('#quit-button').addEventListener('click',()=>{$('#menu-dialog').close();showScreen('title-screen');$('#continue-game').hidden=!loadState()?.started;});
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='h')hint();if(e.key==='Escape'&&!$('#menu-dialog').open)$('#menu-dialog').showModal();if((e.key===' '||e.key==='Enter')&&!$('#dialogue').hidden){e.preventDefault();advanceDialogue();}});
 

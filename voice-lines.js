@@ -402,6 +402,82 @@ export const VOICE_LINES = [
   {
     id: 'warden-door-open', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
     text: 'Go on. I have kept this door closed long enough.'
+  },
+  {
+    id: 'warden-remain-city', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'I will remain. Lantern City has forgotten how to live beneath an open sky.'
+  },
+  {
+    id: 'elowen-compass-road', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'And the compass has chosen a road.'
+  },
+  {
+    id: 'elowen-current-remembers', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'And the old current remembers the Moonwake Garden.'
+  },
+  {
+    id: 'elowen-moonseed-hidden', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'It was not feeding on the moon. It was keeping the moonseed hidden.'
+  },
+  {
+    id: 'elowen-look-behind', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Liora—look behind it.'
+  },
+  {
+    id: 'elowen-comet-clasp', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Comet metal held the old sails without weighing them down.'
+  },
+  {
+    id: 'elowen-star-silk', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Constellation silk catches the current between lights. Bind it with the comet clasp.'
+  },
+  {
+    id: 'elowen-star-sail', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Set it on the ferry’s bare mast. The compass will give it a destination.'
+  },
+  {
+    id: 'elowen-moon-reed', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Moonwake gardeners played reeds like these when a bloom refused the dawn.'
+  },
+  {
+    id: 'elowen-echo-shell', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The shell remembers the tide that once taught this garden its songs.'
+  },
+  {
+    id: 'elowen-mooncall', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Play it for the eclipse flower. Do not command it—ask it to open.'
+  },
+  {
+    id: 'elowen-moonway-default', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Keep it. The roads beyond the city remember tools better than titles.'
+  },
+  {
+    id: 'elowen-ferries-grounded', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'These ferries once carried wayfinders beyond every royal map. I gave the order to ground them.'
+  },
+  {
+    id: 'elowen-roads-leash', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'To keep the crown from turning every road into a leash.'
+  },
+  {
+    id: 'elowen-sail-hint', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Comet metal held the sail. Constellation silk caught the current. Both survived here, if we can make them whole.'
+  },
+  {
+    id: 'elowen-bloom-tide-call', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The flower closes tighter when we speak. Moonwake blooms once opened to a call carried by the tide.'
+  },
+  {
+    id: 'elowen-reed-shell', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The reed can give the tide a voice. Let the echo shell teach it how to return.'
+  },
+  {
+    id: 'elowen-play-softly', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Play the mooncall softly. Whatever the flower protects has slept through enough shouting.'
+  },
+  {
+    id: 'elowen-road-ours', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The ferry is ready. The road ahead belongs to us.'
   }
 ].map(line => ({ ...line, file: `assets/voices/${line.id}.mp3` }));
 

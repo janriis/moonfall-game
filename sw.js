@@ -1,4 +1,4 @@
-const CACHE='moonfall-v15';
+const CACHE='moonfall-v16';
 const VOICE_FILES=[
   'mosswick-soft-steps','mosswick-mushrooms-knew','mosswick-smallest-lights','mosswick-introduce-them',
   'mosswick-hollow-guards','mosswick-ask-the-well','mosswick-eastern-path','mosswick-lantern',
@@ -24,9 +24,13 @@ const VOICE_FILES=[
   'warden-stormglass','warden-root-filament','warden-living-compass','warden-nightglass',
   'warden-dawn-petal','warden-eclipse-lens','warden-tower-default','warden-elowen-astronomer',
   'warden-mercy-cowardice','warden-living-needle','warden-nightglass-memory','warden-compass-before-crown',
-  'warden-door-open'
+  'warden-door-open','warden-remain-city','elowen-compass-road','elowen-current-remembers',
+  'elowen-moonseed-hidden','elowen-look-behind','elowen-comet-clasp','elowen-star-silk',
+  'elowen-star-sail','elowen-moon-reed','elowen-echo-shell','elowen-mooncall',
+  'elowen-moonway-default','elowen-ferries-grounded','elowen-roads-leash','elowen-sail-hint',
+  'elowen-bloom-tide-call','elowen-reed-shell','elowen-play-softly','elowen-road-ours'
 ].map(name=>`./assets/voices/${name}.mp3`);
-const FILES=['./','./index.html','./styles.css?v=15','./game.js?v=15','./voice-lines.js','./manifest.webmanifest','./assets/glade.png','./assets/observatory.png','./assets/causeway.png','./assets/archive.png','./assets/lantern-court.png','./assets/hall-of-names.png','./assets/palace-atrium.png','./assets/heart-vault.png','./assets/rootspire-approach.png','./assets/crown-chamber.png','./assets/liora.png','./assets/mosswick.png','./assets/sera.png','./assets/elowen.png','./assets/warden.png','./assets/cursor.svg','./assets/moon-icon.svg',...VOICE_FILES];
+const FILES=['./','./index.html','./styles.css?v=16','./game.js?v=16','./voice-lines.js','./manifest.webmanifest','./assets/glade.png','./assets/observatory.png','./assets/causeway.png','./assets/archive.png','./assets/lantern-court.png','./assets/hall-of-names.png','./assets/palace-atrium.png','./assets/heart-vault.png','./assets/rootspire-approach.png','./assets/crown-chamber.png','./assets/starway-crossing.png','./assets/moonwake-garden.png','./assets/liora.png','./assets/mosswick.png','./assets/sera.png','./assets/elowen.png','./assets/warden.png','./assets/cursor.svg','./assets/moon-icon.svg',...VOICE_FILES];
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
 self.addEventListener('fetch',e=>e.respondWith(

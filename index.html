@@ -8,7 +8,7 @@
   <title>Moonfall — A Point & Click Adventure</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="assets/moon-icon.svg" />
-  <link rel="stylesheet" href="styles.css?v=15" />
+  <link rel="stylesheet" href="styles.css?v=16" />
 </head>
 <body>
   <main id="game" aria-label="Moonfall adventure game">
@@ -105,6 +105,19 @@
         <button class="hotspot npc warden crown-chamber-only" data-id="chamberWarden" style="--x: 30%; --y: 37%; --w: 9%; --h: 51%" aria-label="The Warden, royal astronomer"><img src="assets/warden.png" alt="" /><span>Talk to the Warden</span></button>
         <button class="hotspot npc elowen crown-chamber-only" data-id="chamberElowen" style="--x: 72%; --y: 38%; --w: 9%; --h: 50%" aria-label="Elowen, wayfinder and heir"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
 
+        <button class="hotspot starway-crossing-only" data-id="cityArch" style="--x: 0%; --y: 10%; --w: 17%; --h: 56%"><span>Lantern City</span></button>
+        <button class="hotspot starway-crossing-only" data-id="cometClasp" style="--x: 8%; --y: 41%; --w: 20%; --h: 34%"><span>Broken comet clasp</span></button>
+        <button class="hotspot starway-crossing-only" data-id="starSilk" style="--x: 89%; --y: 14%; --w: 11%; --h: 48%"><span>Constellation silk</span></button>
+        <button class="hotspot starway-crossing-only" data-id="starFerry" style="--x: 57%; --y: 22%; --w: 29%; --h: 51%"><span>Star-ferry</span></button>
+        <button class="hotspot npc elowen starway-crossing-only" data-id="starwayElowen" style="--x: 42%; --y: 39%; --w: 9%; --h: 50%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
+        <button class="hotspot moonwake-garden-only exit" data-id="starwayCrossing" style="--x: 0%; --y: 10%; --w: 18%; --h: 45%"><span>‹ Star-ferry</span></button>
+        <button class="hotspot moonwake-garden-only" data-id="moonReeds" style="--x: 0%; --y: 45%; --w: 36%; --h: 39%"><span>Singing moon reeds</span></button>
+        <button class="hotspot moonwake-garden-only" data-id="echoShellShrine" style="--x: 79%; --y: 20%; --w: 21%; --h: 58%"><span>Echo-shell shrine</span></button>
+        <button class="hotspot moonwake-garden-only" data-id="eclipseBloom" style="--x: 39%; --y: 7%; --w: 31%; --h: 65%"><span>Eclipse flower</span></button>
+        <button class="hotspot moonwake-garden-only" data-id="moonScar" style="--x: 42%; --y: 0%; --w: 30%; --h: 22%"><span>Shadowed moon</span></button>
+        <button class="hotspot npc elowen moonwake-garden-only" data-id="gardenElowen" style="--x: 70%; --y: 40%; --w: 9%; --h: 49%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
         <div id="hero" aria-label="Liora" style="--hero-x: 57%"><img src="assets/liora.png" alt="" /></div>
         <div id="item-effect" aria-hidden="true"></div>
         <div id="hover-label" aria-hidden="true"></div>
@@ -148,6 +161,6 @@
     <audio id="npc-voice" preload="auto" aria-hidden="true"></audio>
     <div id="story-transition" aria-hidden="true"><div class="transition-star"></div><p>Beyond the forest, one window answers.</p></div>
   </main>
-  <script type="module" src="game.js?v=15"></script>
+  <script type="module" src="game.js?v=16"></script>
 </body>
 </html>
