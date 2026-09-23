@@ -8,7 +8,7 @@
   <title>Moonfall — A Point & Click Adventure</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="assets/moon-icon.svg" />
-  <link rel="stylesheet" href="styles.css?v=14" />
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
   <main id="game" aria-label="Moonfall adventure game">
@@ -90,6 +90,21 @@
         <button class="hotspot npc warden heart-vault-only" data-id="warden" style="--x: 49%; --y: 20%; --w: 11%; --h: 58%" aria-label="The Warden, bound astronomer"><img src="assets/warden.png" alt="" /><span>Talk to the Warden</span></button>
         <button class="hotspot npc elowen heart-vault-only" data-id="vaultElowen" style="--x: 29%; --y: 38%; --w: 9%; --h: 51%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
 
+        <button class="hotspot rootspire-approach-only" data-id="towerDescent" style="--x: 0%; --y: 18%; --w: 22%; --h: 55%"><span>Palace below</span></button>
+        <button class="hotspot rootspire-approach-only" data-id="skyglassBeacon" style="--x: 18%; --y: 4%; --w: 18%; --h: 48%"><span>Cracked skyglass beacon</span></button>
+        <button class="hotspot rootspire-approach-only" data-id="rootFilament" style="--x: 82%; --y: 30%; --w: 18%; --h: 47%"><span>Golden root filament</span></button>
+        <button class="hotspot rootspire-approach-only" data-id="stormGate" style="--x: 48%; --y: 9%; --w: 30%; --h: 54%"><span>Storm gate</span></button>
+        <button class="hotspot npc warden rootspire-approach-only" data-id="towerWarden" style="--x: 34%; --y: 35%; --w: 10%; --h: 52%" aria-label="The Warden, royal astronomer"><img src="assets/warden.png" alt="" /><span>Talk to the Warden</span></button>
+        <button class="hotspot npc elowen rootspire-approach-only" data-id="towerElowen" style="--x: 73%; --y: 38%; --w: 9%; --h: 50%" aria-label="Elowen, wayfinder and heir"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
+        <button class="hotspot crown-chamber-only exit" data-id="rootspireApproach" style="--x: 0%; --y: 13%; --w: 18%; --h: 57%"><span>‹ Rootspire</span></button>
+        <button class="hotspot crown-chamber-only" data-id="nightglassMirror" style="--x: 13%; --y: 12%; --w: 19%; --h: 54%"><span>Nightglass mirror</span></button>
+        <button class="hotspot crown-chamber-only" data-id="dawnBloom" style="--x: 82%; --y: 27%; --w: 18%; --h: 48%"><span>Dawn root-bloom</span></button>
+        <button class="hotspot crown-chamber-only" data-id="crownDais" style="--x: 37%; --y: 7%; --w: 34%; --h: 61%"><span>Crown of Night</span></button>
+        <button class="hotspot crown-chamber-only" data-id="openSky" style="--x: 67%; --y: 0%; --w: 17%; --h: 25%"><span>Returning stars</span></button>
+        <button class="hotspot npc warden crown-chamber-only" data-id="chamberWarden" style="--x: 30%; --y: 37%; --w: 9%; --h: 51%" aria-label="The Warden, royal astronomer"><img src="assets/warden.png" alt="" /><span>Talk to the Warden</span></button>
+        <button class="hotspot npc elowen crown-chamber-only" data-id="chamberElowen" style="--x: 72%; --y: 38%; --w: 9%; --h: 50%" aria-label="Elowen, wayfinder and heir"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
         <div id="hero" aria-label="Liora" style="--hero-x: 57%"><img src="assets/liora.png" alt="" /></div>
         <div id="item-effect" aria-hidden="true"></div>
         <div id="hover-label" aria-hidden="true"></div>
@@ -133,6 +148,6 @@
     <audio id="npc-voice" preload="auto" aria-hidden="true"></audio>
     <div id="story-transition" aria-hidden="true"><div class="transition-star"></div><p>Beyond the forest, one window answers.</p></div>
   </main>
-  <script type="module" src="game.js?v=14"></script>
+  <script type="module" src="game.js?v=15"></script>
 </body>
 </html>

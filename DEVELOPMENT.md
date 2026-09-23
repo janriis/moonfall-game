@@ -4,13 +4,13 @@ Last updated: 2026-09-23
 
 ## Current phase
 
-The game is a complete browser-playable vertical slice through four internal story chapters. Players never see chapter numbers: each part flows into the next as a new scene. The current build ends after Liora and Elowen repair the ward in the Heart Vault and awaken a root-road leading toward the highest tower.
+The game is a complete browser-playable vertical slice through five internal story chapters. Players never see chapter numbers: each part flows into the next as a new scene. The current build ends after Liora, Elowen, and the Warden restore the Crown of Night to its original purpose as a celestial compass.
 
-The next development session should begin with planning the Crown of Night and tower sequence described under **Resume here next session**.
+The next development session should follow the new star-road beyond Lantern City toward the shadow crossing the moon, as described under **Resume here next session**.
 
 ## Playable route
 
-There are eight finished rooms:
+There are ten finished rooms:
 
 1. **Moonfall Glade** — meet Mosswick, collect a glowcap and moonwater, make a gleam lantern, and recover the star key.
 2. **The Forgotten Orrery** — unlock the mechanism, fill its crystal basin, and return the fallen light to the sky.
@@ -20,8 +20,10 @@ There are eight finished rooms:
 6. **The Hall of Names** — meet Elowen inside the mirror, use the lens in the name loom, and return her name sigil to the mirror.
 7. **The Palace Atrium** — recover the broken sun disc and royal thread, repair the sun seal, and open the descent beneath the empty throne.
 8. **The Heart Vault** — meet the Warden, combine star ash with living root resin, and rewrite the fractured celestial ward.
+9. **The Rootspire Approach** — learn that Elowen is the Crown's lost heir, bind stormglass with living root, and use the compass to open the highest tower.
+10. **The Crown Chamber** — combine nightglass with a dawn petal, reveal the circlet's first design, and free its captive constellations without enthroning Elowen.
 
-The completed story beat is: the Warden admits that he held the sky shut, the repaired ward awakens instead of merely closing, and its roots climb toward the tower after the Crown of Night finds an unknown heir.
+The completed story beat is: Elowen reveals that she chose to erase and hide her name rather than inherit a throne built from stolen stars. The Warden admits that he closed the sky when the Crown reached through the heavens to find her. Liora uses an eclipse lens to show the Crown that it was originally a compass, releasing its constellations and leaving Elowen free to keep her own name.
 
 ## Core systems
 
@@ -42,10 +44,11 @@ The completed story beat is: the Warden admits that he held the sky shut, the re
 - `chapterTwoState(sound)` — Causeway and Archive
 - `chapterThreeState(sound)` — Lantern Court and Hall of Names
 - `chapterFourState(sound)` — Palace Atrium and Heart Vault
+- `chapterFiveState(sound)` — Rootspire Approach and Crown Chamber
 
 Scene transitions preserve the sound setting but deliberately start a new inventory and flag set. Older completed saves are forwarded into the next playable scene when Continue is selected, including builds that stopped after the Hall of Names.
 
-Important completion flags are `chapterOneComplete`, `chapterTwoComplete`, `chapterThreeComplete`, and `chapterFourComplete`. The final flag reopens the current ending card on Continue.
+Important completion flags are `chapterOneComplete` through `chapterFiveComplete`. The final flag reopens the current ending card on Continue. Completed Chapter IV saves from the previous build migrate directly into the Rootspire Approach.
 
 ## NPC voices
 
@@ -85,12 +88,14 @@ The newest generated art is:
 - `assets/palace-atrium.png`
 - `assets/heart-vault.png`
 - `assets/warden.png`
+- `assets/rootspire-approach.png`
+- `assets/crown-chamber.png`
 
 All raster art was created for Moonfall from original prompts. No art from the games that inspired its presentation is included.
 
 ## Verification
 
-Current build status (2026-09-23): `npm run check` passes, all 68 manifest voice files exist, and the new palace sequence has completed a browser playthrough through **The Crown Below** with no game-origin console errors. Migration from a Chapter III completion save into the Palace Atrium works, and resuming inside the Heart Vault does not repeat its room narration.
+Current build status (2026-09-23): `npm run check` passes, all 101 manifest voice files exist, and the tower sequence has completed a browser playthrough through **A Sky Without Heirs**. Migration from a Chapter IV completion save into the Rootspire Approach works, both tower puzzles complete normally, and Continue reopens the Chapter V ending after a reload.
 
 Run these checks before handing off a build:
 
@@ -106,16 +111,16 @@ In the browser, verify a new game, Continue, room narration, return visits, move
 - Voiced dialogue is intentionally duplicated between `game.js` and `voice-lines.js`; punctuation changes can silently break lookup.
 - The service-worker version and file list are updated manually.
 - Gameplay does not yet have automated end-to-end tests.
-- The current story stops when the repaired ward sends roots toward the highest tower; the Crown of Night and its heir are not yet revealed.
+- The current story stops when the restored celestial compass reveals a star-road beyond the city toward a shadow crossing the moon.
 - Google Fonts are optional network resources. Offline play uses the serif fallback.
 
 ## Resume here next session
 
-Start with the next seamless scene after the Heart Vault:
+Start with the next seamless scene after the Crown Chamber:
 
-1. Decide the identity and motive of the Crown of Night’s heir, then outline a two-room tower puzzle arc.
-2. Create the root-choked tower approach and crown chamber art, plus heir character art if the heir appears on screen.
-3. Add first-visit narration, hotspots, state, puzzle interactions, contextual hints, and Elowen/Warden follow-up dialogue.
-4. Continue from the roots climbing out of the Heart Vault without showing a chapter number.
-5. Add new NPC dialogue to both `game.js` and `voice-lines.js`, regenerate only missing clips, and extend `sw.js`.
-6. Update this document’s date, playable route, endpoint, and next resume point.
+1. Decide what is casting the shadow across the moon and why the restored compass points toward it.
+2. Outline a two-room route beyond Lantern City, beginning with the star-road and ending at a location tied to the moon's missing light.
+3. Decide whether the Warden travels with Liora and Elowen or remains behind to repair the city's celestial instruments.
+4. Create the new environment art and any new character art required by the reveal.
+5. Add first-visit narration, hotspots, fresh chapter state, puzzle interactions, contextual hints, dialogue, voices, and offline assets.
+6. Preserve the seamless transition, migrate Chapter V completion saves forward, and update this document's route and resume point.

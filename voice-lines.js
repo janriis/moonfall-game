@@ -270,6 +270,138 @@ export const VOICE_LINES = [
   {
     id: 'warden-default', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
     text: 'Another palace relic. Keep it, if you enjoy carrying old mistakes.'
+  },
+  {
+    id: 'warden-crown-remembered', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'The crown has not found Elowen. It has remembered her.'
+  },
+  {
+    id: 'elowen-records-cut', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'It cannot. My name was cut from every royal record.'
+  },
+  {
+    id: 'warden-not-blood', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Not from your blood.'
+  },
+  {
+    id: 'warden-road-concealed', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'The tower remembers the road its kings concealed.'
+  },
+  {
+    id: 'elowen-crown-compass', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'A compass. The kings turned guidance into command.'
+  },
+  {
+    id: 'warden-give-sky', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Then give it no heir. Give it the sky.'
+  },
+  {
+    id: 'elowen-stormglass', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The old beacons read the wind between stars. This shard still knows how.'
+  },
+  {
+    id: 'elowen-root-filament', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The roots followed the repaired ward. They may bind the glass into a new needle.'
+  },
+  {
+    id: 'elowen-living-compass', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Use it in the storm gate. I would rather face the truth than let another lock keep it for me.'
+  },
+  {
+    id: 'elowen-nightglass', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The mirror shows what symbols were before power taught them to lie.'
+  },
+  {
+    id: 'elowen-dawn-petal', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'A new light from an ancient root. Join it to the nightglass.'
+  },
+  {
+    id: 'elowen-eclipse-lens', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'If that lens can show the crown its first shape, perhaps blood will no longer be its answer.'
+  },
+  {
+    id: 'elowen-tower-default', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Keep it close. The tower has mistaken possession for inheritance before.'
+  },
+  {
+    id: 'elowen-chose-hiding', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The archive hid my name. The mirror hid the rest of me. I chose both.'
+  },
+  {
+    id: 'elowen-refused-throne', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Because everyone else already had. I would not inherit a throne built from stolen stars.'
+  },
+  {
+    id: 'elowen-living-compass-hint', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The storm gate once followed a living compass. Bind the beacon’s glass with a thread from these roots.'
+  },
+  {
+    id: 'elowen-mirror-bloom', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The mirror remembers what the crown was. The root-bloom carries a light untouched by kings.'
+  },
+  {
+    id: 'elowen-balance-lens', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Set dawnlight inside the nightglass. Let neither one erase the other.'
+  },
+  {
+    id: 'elowen-refuse-heir', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Show the crown its first shape. If it still demands an heir, let the answer be no.'
+  },
+  {
+    id: 'elowen-no-name', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The chamber is open. Whatever waits inside no longer gets to name me.'
+  },
+  {
+    id: 'warden-stormglass', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Beacon glass once pointed our ships through weather no sailor could see.'
+  },
+  {
+    id: 'warden-root-filament', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'The ward has given the roots a direction. Do not mistake that for obedience.'
+  },
+  {
+    id: 'warden-living-compass', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'A compass that listens to living things. The old kings would have hated it.'
+  },
+  {
+    id: 'warden-nightglass', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'The first astronomers used nightglass to see through titles and other convenient lies.'
+  },
+  {
+    id: 'warden-dawn-petal', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'New light. The one inheritance the crown never learned to hoard.'
+  },
+  {
+    id: 'warden-eclipse-lens', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Hold it before the crown. Let the oldest truth judge the newest claim.'
+  },
+  {
+    id: 'warden-tower-default', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'The tower remembers its relics more kindly than its rulers.'
+  },
+  {
+    id: 'warden-elowen-astronomer', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'I was Elowen’s royal astronomer. When she fled, the crown reached through the heavens to find her.'
+  },
+  {
+    id: 'warden-mercy-cowardice', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'I made one prison to prevent another. Mercy and cowardice often share a door.'
+  },
+  {
+    id: 'warden-living-needle', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Give the blind wind rose a living needle: skyglass for direction, root for memory.'
+  },
+  {
+    id: 'warden-nightglass-memory', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Nightglass remembers the instrument beneath the crown. Dawnlight may make that memory visible.'
+  },
+  {
+    id: 'warden-compass-before-crown', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'The crown was a compass before a king mistook direction for dominion. Make it remember.'
+  },
+  {
+    id: 'warden-door-open', speaker: 'Warden', voice: 'am_onyx', speed: 0.88,
+    text: 'Go on. I have kept this door closed long enough.'
   }
 ].map(line => ({ ...line, file: `assets/voices/${line.id}.mp3` }));
 

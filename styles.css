@@ -44,14 +44,16 @@ h1 { margin:3px 0 0; font:700 clamp(64px,11vw,130px)/.9 Cinzel,serif; letter-spa
 .scene.hallOfNames { background-image:url('assets/hall-of-names.png'); }
 .scene.palaceAtrium { background-image:url('assets/palace-atrium.png'); }
 .scene.heartVault { background-image:url('assets/heart-vault.png'); }
+.scene.rootspireApproach { background-image:url('assets/rootspire-approach.png'); }
+.scene.crownChamber { background-image:url('assets/crown-chamber.png'); }
 #scene-shade { position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#02051315 50%,#03040b80);z-index:1; }
 .scene::after { content:"";position:absolute;inset:0;pointer-events:none;z-index:8;box-shadow:inset 0 0 80px #02030a99; }
 .hotspot { position:absolute;z-index:4;left:var(--x);top:var(--y);width:var(--w);height:var(--h);border:0;background:transparent;cursor:pointer;border-radius:40%; }
 .hotspot span { position:absolute;left:50%;top:4px;transform:translate(-50%,-100%);padding:5px 9px;background:#0b0e1ee6;border:1px solid #b99a50;color:#fff3ca;white-space:nowrap;opacity:0;pointer-events:none;font-size:14px;transition:.15s;box-shadow:0 3px 10px #000; }
 .hotspot:hover span,.show-hotspots .hotspot span { opacity:1;transform:translate(-50%,-115%); }
 .show-hotspots .hotspot { outline:1px dashed #ead075aa;background:#fff2a70b; }
-.glade-only,.observatory-only,.causeway-only,.archive-only,.lantern-court-only,.hall-of-names-only,.palace-atrium-only,.heart-vault-only { display:none; }
-.scene.glade .glade-only,.scene.observatory .observatory-only,.scene.causeway .causeway-only,.scene.archive .archive-only,.scene.lanternCourt .lantern-court-only,.scene.hallOfNames .hall-of-names-only,.scene.palaceAtrium .palace-atrium-only,.scene.heartVault .heart-vault-only { display:block; }
+.glade-only,.observatory-only,.causeway-only,.archive-only,.lantern-court-only,.hall-of-names-only,.palace-atrium-only,.heart-vault-only,.rootspire-approach-only,.crown-chamber-only { display:none; }
+.scene.glade .glade-only,.scene.observatory .observatory-only,.scene.causeway .causeway-only,.scene.archive .archive-only,.scene.lanternCourt .lantern-court-only,.scene.hallOfNames .hall-of-names-only,.scene.palaceAtrium .palace-atrium-only,.scene.heartVault .heart-vault-only,.scene.rootspireApproach .rootspire-approach-only,.scene.crownChamber .crown-chamber-only { display:block; }
 .npc { z-index:5; overflow:visible; border-radius:0; }
 .npc img { width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 8px 6px #000b);transform-origin:center bottom;animation:npc-idle 3.2s ease-in-out infinite;transition:filter .2s,transform .2s; }
 .npc:hover img { filter:drop-shadow(0 8px 7px #000d) drop-shadow(0 0 8px #8ce7d388);transform:scale(1.035); }
@@ -111,6 +113,7 @@ dialog .ornate {display:block;width:100%;margin-top:10px;}
 .ending.chapter-two-ending {background-image:url('assets/causeway.png');}
 .ending.chapter-three-ending {background-image:url('assets/hall-of-names.png');}
 .ending.chapter-four-ending {background-image:url('assets/heart-vault.png');}
+.ending.chapter-five-ending {background-image:url('assets/crown-chamber.png');}
 .ending::before {content:"";position:absolute;inset:0;background:#0b1024a5;backdrop-filter:blur(3px);}
 .ending-glow {position:absolute;width:35vw;height:35vw;border-radius:50%;background:#c6fff4;filter:blur(50px);opacity:.25;animation:pulse 3s ease-in-out infinite;}
 .ending-card {position:relative;width:min(590px,90%);padding:50px 30px;color:#e9dfc7;text-shadow:0 2px 8px #000;}

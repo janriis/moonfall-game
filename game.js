@@ -6,7 +6,8 @@ const $$ = (q, root = document) => [...root.querySelectorAll(q)];
 const SCENE_NAMES = {
   glade:'Moonfall Glade', observatory:'The Forgotten Orrery', causeway:"Dreamer's Causeway",
   archive:'The Lantern Archive', lanternCourt:'Lantern Court', hallOfNames:'The Hall of Names',
-  palaceAtrium:'The Palace Atrium', heartVault:'The Heart Vault'
+  palaceAtrium:'The Palace Atrium', heartVault:'The Heart Vault',
+  rootspireApproach:'The Rootspire Approach', crownChamber:'The Crown Chamber'
 };
 const PORTRAITS = {
   Liora:'assets/liora.png', Mosswick:'assets/mosswick.png', 'Sera Vale':'assets/sera.png',
@@ -44,6 +45,14 @@ const ROOM_DESCRIPTIONS = {
   heartVault: [
     ['Narration','The Heart Vault is carved around a fractured golden ward, its broken circles spanning the obsidian floor. A dead celestial brazier smolders to the west, luminous resin bleeds from a silver root to the east, and a tall man stands bound within the root-crystal prison beyond.'],
     ['Narration','The chamber tastes of metal and storms. Each pulse beneath the floor makes the living roots tighten around their prisoner, while dust falls from the arches in time with a heartbeat too vast to belong to any human body.']
+  ],
+  rootspireApproach: [
+    ['Narration','The Rootspire Approach coils around the highest tower above a city adrift in moonlit cloud. Living roots brace a broken landing, a cracked skyglass beacon leans over the western stair, and a vast storm gate turns its blind wind rose toward the sky.'],
+    ['Narration','Rain has given way to a high, cold wind scented with lightning and amber sap. Below, Lantern City burns with scattered points of returning light; above, the tower hums as though a compass needle were trapped inside its stone.']
+  ],
+  crownChamber: [
+    ['Narration','The Crown Chamber stands open to the whole night. A black-and-gold circlet floats above the central dais inside an orrery of captive stars, while a fractured nightglass mirror and a single dawn root-bloom face one another across the polished floor.'],
+    ['Narration','Here the wind is perfectly still. Every returning star casts a thread of gold toward the crown, and every thread pulls faintly toward Elowen, waiting for her to become an answer she chose long ago to refuse.']
   ]
 };
 
@@ -67,7 +76,13 @@ const ITEMS = {
   sunSeal: { name: 'Sun seal', art: '☀', description: 'The royal thread binds the disc into a seal shaped for the throne.' },
   starAsh: { name: 'Star ash', art: '⁙', description: 'Cold ash that still glitters with the memory of distant suns.' },
   rootResin: { name: 'Root resin', art: '◒', description: 'Amber resin from a living root, warm and stubbornly bright.' },
-  bindingInk: { name: 'Binding ink', art: '✺', description: 'Star ash suspended in root resin: an ink made to mend celestial wards.' }
+  bindingInk: { name: 'Binding ink', art: '✺', description: 'Star ash suspended in root resin: an ink made to mend celestial wards.' },
+  stormglass: { name: 'Stormglass shard', art: '◭', description: 'A blue shard from the tower beacon. It trembles whenever the wind changes its mind.' },
+  rootFilament: { name: 'Root filament', art: '⌁', description: 'A living golden thread, supple enough to bend and stubborn enough to point home.' },
+  livingCompass: { name: 'Living compass', art: '✥', description: 'Stormglass bound in a living root. Its needle points toward a choice rather than north.' },
+  nightglass: { name: 'Nightglass shard', art: '◆', description: 'Dark mirror-glass that reflects what a thing was before anyone named it.' },
+  dawnPetal: { name: 'Dawn petal', art: '❋', description: 'A warm root-bloom petal holding the first color of morning.' },
+  eclipseLens: { name: 'Eclipse lens', art: '◐', description: 'Nightglass and dawnlight held in balance. It reveals the shape beneath a symbol.' }
 };
 
 const freshState = () => ({
@@ -98,6 +113,13 @@ const chapterFourState = sound => ({
   seenRooms: [], started: true, sound
 });
 
+const chapterFiveState = sound => ({
+  chapter: 5,
+  scene: 'rootspireApproach', mode: 'use', selected: null, inventory: [],
+  flags: { tookStormglass:false, tookRootFilament:false, madeCompass:false, openedStormGate:false, tookNightglass:false, tookDawnPetal:false, madeEclipseLens:false, restoredCrown:false, metTowerElowen:false, metTowerWarden:false },
+  seenRooms: [], started: true, sound
+});
+
 let state = freshState();
 let dialogueQueue = [];
 let dialogueCallback = null;
@@ -122,7 +144,8 @@ function showScreen(id) {
 function begin(isContinue = false) {
   if (isContinue && loadState()) state = loadState();
   else { state = freshState(); state.started = true; save(); }
-  if (isContinue && state.chapterFourComplete) { showChapterFourEnding(); return; }
+  if (isContinue && state.chapterFiveComplete) { showChapterFiveEnding(); return; }
+  if (isContinue && state.chapterFourComplete && state.chapter === 4) { transitionToChapterFive(); return; }
   if (isContinue && state.chapterThreeComplete && state.chapter === 3) { transitionToChapterFour(); return; }
   if (isContinue && state.chapterTwoComplete && state.chapter === 2) { transitionToChapterThree(); return; }
   if (isContinue && state.chapterOneComplete && state.chapter === 1) { transitionToChapterTwo(); return; }
@@ -203,6 +226,29 @@ function enterChapterFourScene() {
   ]);
 }
 
+function beginChapterFive() {
+  prepareChapterFive();
+  enterChapterFiveScene();
+}
+
+function prepareChapterFive() {
+  const sound = state.sound;
+  state = chapterFiveState(sound);
+  save();
+  showScreen('play-screen');
+  render();
+  placeHeroForScene();
+  ensureAudio();
+}
+
+function enterChapterFiveScene() {
+  describeRoom(state.scene, [
+    ['Warden','The crown has not found Elowen. It has remembered her.'],
+    ['Elowen','It cannot. My name was cut from every royal record.'],
+    ['Warden','Not from your blood.']
+  ]);
+}
+
 function runStoryTransition(message, prepare, enter) {
   $('#story-transition p').textContent = message;
   const transition = $('#story-transition');
@@ -237,6 +283,12 @@ function transitionToChapterFour() {
   runStoryTransition('Above them, the empty throne begins to breathe.', prepareChapterFour, enterChapterFourScene);
 }
 
+function transitionToChapterFive() {
+  state.chapterFourComplete = true;
+  save();
+  runStoryTransition('Above them, the highest tower remembers an heir.', prepareChapterFive, enterChapterFiveScene);
+}
+
 function describeRoom(scene, followingLines = []) {
   state.seenRooms ||= [];
   const firstVisit = !state.seenRooms.includes(scene);
@@ -266,15 +318,17 @@ function placeHeroForScene(fromScene = null) {
   const returningToCauseway = state.scene === 'causeway' && fromScene === 'archive';
   const returningToLanternCourt = state.scene === 'lanternCourt' && fromScene === 'hallOfNames';
   const returningToPalace = state.scene === 'palaceAtrium' && fromScene === 'heartVault';
+  const returningToRootspire = state.scene === 'rootspireApproach' && fromScene === 'crownChamber';
   const positions = {
     glade: returningToGlade ? 88 : 57, observatory:18,
     causeway:returningToCauseway ? 89 : 52, archive:10,
     lanternCourt:returningToLanternCourt ? 90 : 48, hallOfNames:13,
-    palaceAtrium:returningToPalace ? 50 : 14, heartVault:12
+    palaceAtrium:returningToPalace ? 50 : 14, heartVault:12,
+    rootspireApproach:returningToRootspire ? 73 : 16, crownChamber:15
   };
   const x = positions[state.scene];
   hero.classList.remove('walking', 'arriving');
-  hero.classList.toggle('face-left', returningToGlade || returningToCauseway || returningToLanternCourt || returningToPalace);
+  hero.classList.toggle('face-left', returningToGlade || returningToCauseway || returningToLanternCourt || returningToPalace || returningToRootspire);
   hero.style.setProperty('--walk-duration', '0ms');
   hero.style.setProperty('--hero-x', `${x}%`);
 }
@@ -330,6 +384,16 @@ function combine(a, b) {
     state.flags.madeInk = true; state.selected = null;
     magicEffect(86,82); chime();
     say([['Liora','The resin drinks the ash. Every golden drop arranges itself into a tiny constellation.']]);
+  } else if (pair.has('stormglass') && pair.has('rootFilament')) {
+    removeItem('stormglass'); removeItem('rootFilament'); addItem('livingCompass');
+    state.flags.madeCompass = true; state.selected = null;
+    magicEffect(86,82); chime();
+    say([['Liora','The root curls around the glass and finds a direction. Not north—the chamber beyond.']]);
+  } else if (pair.has('nightglass') && pair.has('dawnPetal')) {
+    removeItem('nightglass'); removeItem('dawnPetal'); addItem('eclipseLens');
+    state.flags.madeEclipseLens = true; state.selected = null;
+    magicEffect(86,82); chime();
+    say([['Liora','Night holds the dawn without swallowing it. The glass is showing shapes beneath their names.']]);
   } else {
     state.selected = null; say([['Liora', `Those two have very little to say to each other.`]]);
   }
@@ -409,6 +473,18 @@ function inspect(id) {
     warden:'He wears the ruined heavens like armor. The roots bind his body, but not his attention.',
     palaceElowen:'Elowen studies the palace with the wary recognition of someone returning to a nightmare.',
     vaultElowen:'Elowen keeps one hand near her wayfinder tools and the other clenched at her side.',
+    towerDescent:'The roots have closed around the stair below. Whatever the crown wants, it means to be answered here.',
+    skyglassBeacon: state.flags.tookStormglass ? 'The beacon frame is empty now, singing softly in the wind.' : 'A cracked blue pane catches every gust and turns it into a different star.',
+    rootFilament: state.flags.tookRootFilament ? 'The root has already woven a smooth new skin over the missing thread.' : 'One golden filament has come loose from the climbing roots. It points toward the storm gate.',
+    stormGate: state.flags.openedStormGate ? 'The wind rose stands open, its cardinal points rearranged into a stair.' : 'The gate has no lock—only a blind wind rose with an empty needle socket.',
+    towerWarden:'Freed from the roots below, the Warden seems less like a jailer here and more like a man arriving late to his own confession.',
+    towerElowen:'The roots lean toward Elowen. She refuses to lean back.',
+    nightglassMirror: state.flags.tookNightglass ? 'The mirror is one dark tooth shorter. In its remaining facets, the crown looks like an open compass.' : 'The fractured mirror refuses every face. It reflects only the oldest shape of whatever stands before it.',
+    dawnBloom: state.flags.tookDawnPetal ? 'The root-bloom has folded around its remaining light.' : 'A flower of living root has opened at the edge of the chamber, holding one petal the color of first light.',
+    crownDais: state.flags.restoredCrown ? 'The circlet has opened into celestial rings. Nothing in it resembles a throne now.' : 'The Crown of Night hangs inside a web of stolen constellations. Every point turns toward Elowen.',
+    openSky:'For the first time, the sky above the city looks deep instead of sealed. Still, whole constellations remain trapped in the crown.',
+    chamberWarden:'The Warden watches the crown with the exhausted attention of an astronomer facing his oldest error.',
+    chamberElowen:'Elowen stands before her inheritance and looks only like herself.',
     mosswick:'A forest keeper, judging by the leaves, bells, and complete lack of ordinary pockets.',
     sera:'She is translucent at the edges, but her expression is considerably more solid.',
     elowen: state.flags.freedElowen ? 'Elowen is older than Liora remembers, and real enough to cast a shadow.' : 'A woman waits inside the mirror, lit at the edges like a memory refusing to fade.'
@@ -419,7 +495,8 @@ function inspect(id) {
 function useHotspot(id) {
   const item = state.selected;
   state.selected = null;
-  if (id === 'observatory' || id === 'glade' || id === 'archive' || id === 'causeway' || id === 'lanternCourt' || id === 'hallOfNames' || id === 'palaceAtrium') { changeScene(id); return; }
+  if (id === 'observatory' || id === 'glade' || id === 'archive' || id === 'causeway' || id === 'lanternCourt' || id === 'hallOfNames' || id === 'palaceAtrium' || id === 'rootspireApproach') { changeScene(id); return; }
+  if (state.chapter === 5) { useChapterFiveHotspot(id, item); render(); return; }
   if (state.chapter === 4) { useChapterFourHotspot(id, item); render(); return; }
   if (state.chapter === 3) { useChapterThreeHotspot(id, item); render(); return; }
   if (state.chapter === 2) { useChapterTwoHotspot(id, item); render(); return; }
@@ -654,7 +731,7 @@ function useChapterFourHotspot(id, item) {
         ['Warden','No. It is awake.'],
         ['Elowen','Liora—the roots are moving toward the tower.'],
         ['Warden','Then the Crown of Night has found its heir.']
-      ], showChapterFourEnding);
+      ], transitionToChapterFive);
     } else if (state.flags.restoredWard) say([['Liora','Every repaired line points upward now. Toward the highest tower.']]);
     else if (item) wrongItem(item,id);
     else say([['Liora','The broken lines need something that can bind living root to fallen starlight.']]);
@@ -724,6 +801,131 @@ function talkToWarden(item) {
   }
 }
 
+function useChapterFiveHotspot(id, item) {
+  if (id === 'towerElowen' || id === 'chamberElowen') {
+    talkToTowerElowen(item, id === 'chamberElowen');
+  } else if (id === 'towerWarden' || id === 'chamberWarden') {
+    talkToTowerWarden(item, id === 'chamberWarden');
+  } else if (id === 'skyglassBeacon') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookStormglass) {
+      state.flags.tookStormglass=true; addItem('stormglass'); chime();
+      say([['Liora','A loose shard. It catches the wind and points to stars I cannot see.']]);
+    } else say([['Liora','The beacon has given us its last clear piece.']]);
+  } else if (id === 'rootFilament') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookRootFilament) {
+      state.flags.tookRootFilament=true; addItem('rootFilament'); chime();
+      say([['Liora','The root lets one golden thread unwind into my hand. It keeps turning toward the gate.']]);
+    } else say([['Liora','The living weave has already sealed itself.']]);
+  } else if (id === 'stormGate') {
+    if (item === 'livingCompass' && !state.flags.openedStormGate) {
+      state.flags.openedStormGate=true; removeItem('livingCompass'); magicEffect(63,35); chime(); save();
+      say([
+        ['Liora','The compass chooses a point the old wind rose forgot.'],
+        ['Warden','The tower remembers the road its kings concealed.']
+      ]);
+    } else if (state.flags.openedStormGate && !item) {
+      changeScene('crownChamber');
+    } else if (state.flags.openedStormGate) wrongItem(item,id);
+    else if (item) wrongItem(item,id);
+    else say([['Liora','The wind rose needs a needle that can listen to both the storm and the roots.']]);
+  } else if (id === 'nightglassMirror') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookNightglass) {
+      state.flags.tookNightglass=true; addItem('nightglass'); chime();
+      say([['Liora','This shard reflects the crown as a set of open rings—not a thing anyone could wear.']]);
+    } else say([['Liora','The remaining glass is fixed too deeply in the frame.']]);
+  } else if (id === 'dawnBloom') {
+    if (item) return wrongItem(item,id);
+    if (!state.flags.tookDawnPetal) {
+      state.flags.tookDawnPetal=true; addItem('dawnPetal'); chime();
+      say([['Liora','One petal opens into my palm. The light inside it feels new enough to forgive an old mistake.']]);
+    } else say([['Liora','The bloom closes around the light it has left.']]);
+  } else if (id === 'crownDais') {
+    if (item === 'eclipseLens' && !state.flags.restoredCrown) {
+      state.flags.restoredCrown=true; removeItem('eclipseLens'); magicEffect(53,31); chime(); save();
+      say([
+        ['Liora','The lens is showing me the first design. It was never a crown.'],
+        ['Elowen','A compass. The kings turned guidance into command.'],
+        ['Warden','Then give it no heir. Give it the sky.'],
+        ['Liora','Every road belongs to the traveler.']
+      ], showChapterFiveEnding);
+    } else if (state.flags.restoredCrown) {
+      say([['Liora','The rings point outward now. The Crown of Night has remembered how to guide without ruling.']]);
+    } else if (item) wrongItem(item,id);
+    else say([['Liora','The crown only shows the shape its rulers gave it. We need a way to see what it was before.']]);
+  } else if (id === 'towerDescent' || id === 'openSky') {
+    inspect(id);
+  }
+}
+
+function talkToTowerElowen(item, inChamber) {
+  if (item) {
+    const reactions = {
+      stormglass:'The old beacons read the wind between stars. This shard still knows how.',
+      rootFilament:'The roots followed the repaired ward. They may bind the glass into a new needle.',
+      livingCompass:'Use it in the storm gate. I would rather face the truth than let another lock keep it for me.',
+      nightglass:'The mirror shows what symbols were before power taught them to lie.',
+      dawnPetal:'A new light from an ancient root. Join it to the nightglass.',
+      eclipseLens:'If that lens can show the crown its first shape, perhaps blood will no longer be its answer.'
+    };
+    say([['Elowen',reactions[item] || 'Keep it close. The tower has mistaken possession for inheritance before.']]);
+    return;
+  }
+  const f = state.flags;
+  if (!f.metTowerElowen) {
+    f.metTowerElowen = true;
+    say([
+      ['Elowen','The archive hid my name. The mirror hid the rest of me. I chose both.'],
+      ['Liora','Because the crown would have claimed you?'],
+      ['Elowen','Because everyone else already had. I would not inherit a throne built from stolen stars.']
+    ]);
+  } else if (!inChamber && !f.openedStormGate) {
+    say([['Elowen','The storm gate once followed a living compass. Bind the beacon’s glass with a thread from these roots.']]);
+  } else if (inChamber && (!f.tookNightglass || !f.tookDawnPetal)) {
+    say([['Elowen','The mirror remembers what the crown was. The root-bloom carries a light untouched by kings.']]);
+  } else if (inChamber && !f.madeEclipseLens) {
+    say([['Elowen','Set dawnlight inside the nightglass. Let neither one erase the other.']]);
+  } else if (inChamber) {
+    say([['Elowen','Show the crown its first shape. If it still demands an heir, let the answer be no.']]);
+  } else {
+    say([['Elowen','The chamber is open. Whatever waits inside no longer gets to name me.']]);
+  }
+}
+
+function talkToTowerWarden(item, inChamber) {
+  if (item) {
+    const reactions = {
+      stormglass:'Beacon glass once pointed our ships through weather no sailor could see.',
+      rootFilament:'The ward has given the roots a direction. Do not mistake that for obedience.',
+      livingCompass:'A compass that listens to living things. The old kings would have hated it.',
+      nightglass:'The first astronomers used nightglass to see through titles and other convenient lies.',
+      dawnPetal:'New light. The one inheritance the crown never learned to hoard.',
+      eclipseLens:'Hold it before the crown. Let the oldest truth judge the newest claim.'
+    };
+    say([['Warden',reactions[item] || 'The tower remembers its relics more kindly than its rulers.']]);
+    return;
+  }
+  const f = state.flags;
+  if (!f.metTowerWarden) {
+    f.metTowerWarden = true;
+    say([
+      ['Warden','I was Elowen’s royal astronomer. When she fled, the crown reached through the heavens to find her.'],
+      ['Liora','So you closed the sky.'],
+      ['Warden','I made one prison to prevent another. Mercy and cowardice often share a door.']
+    ]);
+  } else if (!inChamber && !f.openedStormGate) {
+    say([['Warden','Give the blind wind rose a living needle: skyglass for direction, root for memory.']]);
+  } else if (inChamber && !f.madeEclipseLens) {
+    say([['Warden','Nightglass remembers the instrument beneath the crown. Dawnlight may make that memory visible.']]);
+  } else if (inChamber) {
+    say([['Warden','The crown was a compass before a king mistook direction for dominion. Make it remember.']]);
+  } else {
+    say([['Warden','Go on. I have kept this door closed long enough.']]);
+  }
+}
+
 function talkToSera(item) {
   if (item) {
     const reactions = {
@@ -768,7 +970,13 @@ function wrongItem(item, target) {
     'royalThread:palaceDescent':'The thread carries an oath, but the throne needs the symbol that oath belonged to.',
     'starAsh:brokenWard':'The ash remembers starlight, but it will scatter before I can write with it.',
     'rootResin:brokenWard':'The resin can bind living things, but the ward was written with stars.',
-    'sunSeal:brokenWard':'The palace seal opened the descent. It was never meant to mend this circle.'
+    'sunSeal:brokenWard':'The palace seal opened the descent. It was never meant to mend this circle.',
+    'stormglass:stormGate':'The glass can read the storm, but it needs something living to hold a direction.',
+    'rootFilament:stormGate':'The root remembers the way, but the wind rose needs a needle it can see.',
+    'nightglass:crownDais':'The shard sees the crown’s first shape, but there is not enough light to reveal it.',
+    'dawnPetal:crownDais':'The petal brings new light, but the crown reflects only its own old story.',
+    'livingCompass:crownDais':'The compass has already found the chamber. It cannot reveal what the crown used to be.',
+    'eclipseLens:stormGate':'The gate needs direction, not revelation.'
   };
   say([['Liora', lines[`${item}:${target}`] || `The ${ITEMS[item].name.toLowerCase()} does not belong there.`]]);
 }
@@ -852,16 +1060,32 @@ function showChapterThreeEnding() {
 }
 
 function showChapterFourEnding() {
-  state.chapterFourComplete = true; save();
+  transitionToChapterFive();
+}
+
+function showChapterFiveEnding() {
+  state.chapterFiveComplete = true; save();
   setEnding({
-    eyebrow:'The ward awakens', title:'The Crown Below',
-    text:'The repaired circle sends living roots racing upward through the palace walls. High above, the darkest tower kindles with a crown-shaped constellation—and somewhere in the city, an unseen heir opens their eyes.',
-    end:'To be continued', button:'Play from the beginning', className:'chapter-four-ending', action:()=>begin(false)
+    eyebrow:'The crown remembers', title:'A Sky Without Heirs',
+    text:'The circlet opens into a compass of golden rings and releases the constellations it once held captive. Elowen keeps her name, the Warden sees the heavens move freely, and a new star-road points beyond the city toward the shadow crossing the moon.',
+    end:'To be continued', button:'Play from the beginning', className:'chapter-five-ending', action:()=>begin(false)
   });
 }
 
 function hint() {
   const f=state.flags; let msg;
+  if(state.chapter===5){
+    if(!f.tookStormglass) msg='The cracked beacon still holds one loose shard of skyglass.';
+    else if(!f.tookRootFilament) msg='A golden filament has come loose from the roots beside the gate.';
+    else if(state.inventory.includes('stormglass')&&state.inventory.includes('rootFilament')) msg='Bind the stormglass with the living root filament.';
+    else if(!f.openedStormGate) msg='The living compass belongs in the storm gate’s empty needle socket.';
+    else if(state.scene==='rootspireApproach') msg='The open storm gate leads into the tower’s crown chamber.';
+    else if(!f.tookNightglass) msg='The fractured mirror has one loose shard of nightglass.';
+    else if(!f.tookDawnPetal) msg='The root-bloom holds a petal filled with new light.';
+    else if(state.inventory.includes('nightglass')&&state.inventory.includes('dawnPetal')) msg='Join the dawn petal to the nightglass shard.';
+    else msg='Hold the eclipse lens before the Crown of Night.';
+    toast(msg,4000); $('#scene').classList.add('show-hotspots'); setTimeout(()=>$('#scene').classList.remove('show-hotspots'),1800); return;
+  }
   if(state.chapter===4){
     if(!f.tookDisc) msg='The shattered sun mosaic has a loose center.';
     else if(!f.tookThread) msg='The torn royal banner still holds one unbroken thread.';
@@ -923,7 +1147,7 @@ function footstepSequence(duration){
   for(let i=0;i<steps;i++)tone(i%2?82:96,.045,'triangle',.007,.12+i*(duration/steps)/1000);
 }
 function chime(){[523,659,784,1046].forEach((f,i)=>tone(f,.55,'sine',.035,i*.09));}
-function ambientTone(){tone(state.scene==='glade'?174:state.scene==='hallOfNames'?196:state.scene==='heartVault'?147:220,.9,'sine',.018);}
+function ambientTone(){tone(state.scene==='glade'?174:state.scene==='hallOfNames'?196:state.scene==='heartVault'?147:state.scene==='rootspireApproach'?165:state.scene==='crownChamber'?247:220,.9,'sine',.018);}
 function toggleSound(){state.sound=!state.sound;if(state.sound){ensureAudio();chime();}else stopVoice();render();toast(state.sound?'Sound on':'Sound off');}
 
 function seedFireflies(){const box=$('#fireflies');for(let i=0;i<18;i++){const f=document.createElement('i');f.className='firefly';f.style.left=`${7+Math.random()*86}%`;f.style.top=`${22+Math.random()*65}%`;f.style.setProperty('--d',`${2+Math.random()*4}s`);f.style.animationDelay=`${-Math.random()*5}s`;box.append(f);}}
@@ -939,7 +1163,7 @@ $('#hint-button').addEventListener('click',hint);
 $('#sound-button').addEventListener('click',toggleSound); $('#title-sound').addEventListener('click',toggleSound);
 $('#menu-button').addEventListener('click',()=>$('#menu-dialog').showModal());
 $('#resume-button').addEventListener('click',()=>$('#menu-dialog').close());
-$('#restart-button').addEventListener('click',()=>{$('#menu-dialog').close();state.chapter===4?beginChapterFour():state.chapter===3?beginChapterThree():state.chapter===2?beginChapterTwo():begin(false);});
+$('#restart-button').addEventListener('click',()=>{$('#menu-dialog').close();state.chapter===5?beginChapterFive():state.chapter===4?beginChapterFour():state.chapter===3?beginChapterThree():state.chapter===2?beginChapterTwo():begin(false);});
 $('#quit-button').addEventListener('click',()=>{$('#menu-dialog').close();showScreen('title-screen');$('#continue-game').hidden=!loadState()?.started;});
 document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='h')hint();if(e.key==='Escape'&&!$('#menu-dialog').open)$('#menu-dialog').showModal();if((e.key===' '||e.key==='Enter')&&!$('#dialogue').hidden){e.preventDefault();advanceDialogue();}});
 
