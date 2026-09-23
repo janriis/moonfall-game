@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#101224" />
+  <meta name="description" content="Moonfall — an original point-and-click fantasy adventure." />
+  <title>Moonfall — A Point & Click Adventure</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="assets/moon-icon.svg" />
+  <link rel="stylesheet" href="styles.css?v=14" />
+</head>
+<body>
+  <main id="game" aria-label="Moonfall adventure game">
+    <section id="title-screen" class="screen active" aria-labelledby="game-title">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="title-card">
+        <p class="eyebrow">An original point & click tale</p>
+        <h1 id="game-title">Moonfall</h1>
+        <p class="subtitle">The Light Beneath the Roots</p>
+        <div class="moon-sigil" aria-hidden="true"><span></span></div>
+        <p class="prologue">On the longest night, the forest forgot the stars.<br />One wayfinder still remembers their song.</p>
+        <div class="title-actions">
+          <button id="new-game" class="ornate primary">Begin the tale</button>
+          <button id="continue-game" class="ornate" hidden>Continue</button>
+        </div>
+        <p class="controls-note">Click to explore · Select an item, then where to use it · Press H for hints</p>
+      </div>
+      <button id="title-sound" class="corner-button" aria-label="Toggle sound">♪</button>
+    </section>
+
+    <section id="play-screen" class="screen" aria-label="Game scene">
+      <header class="topbar">
+        <div><span class="chapter">Moonfall</span><strong id="location-name">Moonfall Glade</strong></div>
+        <div class="top-actions">
+          <button id="hint-button" aria-label="Show a hint">Hint</button>
+          <button id="sound-button" aria-label="Toggle sound">♪</button>
+          <button id="menu-button" aria-label="Open menu">☰</button>
+        </div>
+      </header>
+
+      <div id="scene" class="scene glade" aria-live="polite">
+        <div id="scene-shade" aria-hidden="true"></div>
+        <div id="fireflies" aria-hidden="true"></div>
+        <button class="hotspot glade-only" data-id="well" style="--x: 5%; --y: 32%; --w: 19%; --h: 38%"><span>Old well</span></button>
+        <button class="hotspot glade-only" data-id="hollow" style="--x: 43%; --y: 42%; --w: 18%; --h: 28%"><span>Root hollow</span></button>
+        <button class="hotspot glade-only" data-id="mushrooms" style="--x: 79%; --y: 69%; --w: 16%; --h: 19%"><span>Glowcaps</span></button>
+        <button class="hotspot glade-only exit" data-id="observatory" style="--x: 82%; --y: 24%; --w: 18%; --h: 45%"><span>Forest path ›</span></button>
+        <button class="hotspot npc glade-only" data-id="mosswick" style="--x: 25%; --y: 34%; --w: 13%; --h: 52%" aria-label="Mosswick, forest keeper"><img src="assets/mosswick.png" alt="" /><span>Talk to Mosswick</span></button>
+
+        <button class="hotspot observatory-only exit" data-id="glade" style="--x: 0%; --y: 30%; --w: 20%; --h: 48%"><span>‹ Glade path</span></button>
+        <button class="hotspot observatory-only" data-id="astrolabe" style="--x: 35%; --y: 17%; --w: 27%; --h: 46%"><span>Celestial mechanism</span></button>
+        <button class="hotspot observatory-only" data-id="pedestal" style="--x: 45%; --y: 47%; --w: 19%; --h: 28%"><span>Crystal pedestal</span></button>
+        <button class="hotspot observatory-only" data-id="castle" style="--x: 78%; --y: 18%; --w: 19%; --h: 37%"><span>Distant city</span></button>
+
+        <button class="hotspot causeway-only" data-id="fountain" style="--x: 0%; --y: 35%; --w: 28%; --h: 54%"><span>Dream fountain</span></button>
+        <button class="hotspot causeway-only" data-id="cityGate" style="--x: 36%; --y: 14%; --w: 30%; --h: 55%"><span>Sealed city gate</span></button>
+        <button class="hotspot causeway-only" data-id="cityWindow" style="--x: 43%; --y: 0%; --w: 15%; --h: 18%"><span>Glowing window</span></button>
+        <button class="hotspot causeway-only" data-id="brokenBell" style="--x: 68%; --y: 18%; --w: 18%; --h: 49%"><span>Broken bell</span></button>
+        <button class="hotspot causeway-only exit" data-id="archive" style="--x: 85%; --y: 55%; --w: 15%; --h: 37%"><span>Archive stair ›</span></button>
+
+        <button class="hotspot archive-only exit" data-id="causeway" style="--x: 0%; --y: 18%; --w: 13%; --h: 63%"><span>‹ Causeway</span></button>
+        <button class="hotspot archive-only" data-id="tapestry" style="--x: 12%; --y: 2%; --w: 21%; --h: 56%"><span>Torn tapestry</span></button>
+        <button class="hotspot archive-only" data-id="starMap" style="--x: 35%; --y: 3%; --w: 34%; --h: 59%"><span>Dusty star map</span></button>
+        <button class="hotspot archive-only" data-id="resonator" style="--x: 73%; --y: 14%; --w: 26%; --h: 57%"><span>Brass resonator</span></button>
+        <button class="hotspot npc sera archive-only" data-id="sera" style="--x: 64%; --y: 29%; --w: 11%; --h: 50%" aria-label="Sera Vale, spectral archivist"><img src="assets/sera.png" alt="" /><span>Talk to Sera Vale</span></button>
+
+        <button class="hotspot lantern-court-only" data-id="lanternTree" style="--x: 0%; --y: 8%; --w: 34%; --h: 62%"><span>Lantern tree</span></button>
+        <button class="hotspot lantern-court-only" data-id="sundial" style="--x: 58%; --y: 38%; --w: 29%; --h: 37%"><span>Broken sundial</span></button>
+        <button class="hotspot lantern-court-only" data-id="palace" style="--x: 35%; --y: 0%; --w: 28%; --h: 30%"><span>Palace towers</span></button>
+        <button class="hotspot lantern-court-only exit" data-id="hallOfNames" style="--x: 86%; --y: 9%; --w: 14%; --h: 61%"><span>Hall of Names ›</span></button>
+
+        <button class="hotspot hall-of-names-only exit" data-id="lanternCourt" style="--x: 0%; --y: 20%; --w: 15%; --h: 55%"><span>‹ Lantern Court</span></button>
+        <button class="hotspot hall-of-names-only" data-id="memoryMirror" style="--x: 35%; --y: 3%; --w: 31%; --h: 67%"><span>Memory mirror</span></button>
+        <button class="hotspot hall-of-names-only" data-id="nameLoom" style="--x: 73%; --y: 21%; --w: 27%; --h: 52%"><span>Name loom</span></button>
+        <button class="hotspot npc elowen hall-of-names-only" data-id="elowen" style="--x: 44%; --y: 19%; --w: 11%; --h: 57%" aria-label="Elowen, trapped wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
+        <button class="hotspot palace-atrium-only" data-id="sunMosaic" style="--x: 0%; --y: 55%; --w: 46%; --h: 39%"><span>Shattered sun mosaic</span></button>
+        <button class="hotspot palace-atrium-only" data-id="royalBanner" style="--x: 83%; --y: 0%; --w: 17%; --h: 58%"><span>Torn royal banner</span></button>
+        <button class="hotspot palace-atrium-only" data-id="palaceSky" style="--x: 0%; --y: 0%; --w: 43%; --h: 32%"><span>Starless sky</span></button>
+        <button class="hotspot palace-atrium-only" data-id="throne" style="--x: 47%; --y: 12%; --w: 21%; --h: 29%"><span>Empty throne</span></button>
+        <button class="hotspot palace-atrium-only" data-id="palaceDescent" style="--x: 43%; --y: 37%; --w: 29%; --h: 34%"><span>Sealed descent</span></button>
+        <button class="hotspot npc elowen palace-atrium-only" data-id="palaceElowen" style="--x: 72%; --y: 34%; --w: 10%; --h: 55%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
+        <button class="hotspot heart-vault-only exit" data-id="palaceAtrium" style="--x: 0%; --y: 0%; --w: 23%; --h: 46%"><span>‹ Palace stair</span></button>
+        <button class="hotspot heart-vault-only" data-id="starBrazier" style="--x: 0%; --y: 42%; --w: 25%; --h: 48%"><span>Celestial brazier</span></button>
+        <button class="hotspot heart-vault-only" data-id="rootVein" style="--x: 79%; --y: 16%; --w: 21%; --h: 67%"><span>Bleeding root</span></button>
+        <button class="hotspot heart-vault-only" data-id="brokenWard" style="--x: 60%; --y: 53%; --w: 19%; --h: 40%"><span>Fractured ward</span></button>
+        <button class="hotspot heart-vault-only" data-id="vaultPrison" style="--x: 42%; --y: 2%; --w: 26%; --h: 53%"><span>Root-crystal prison</span></button>
+        <button class="hotspot npc warden heart-vault-only" data-id="warden" style="--x: 49%; --y: 20%; --w: 11%; --h: 58%" aria-label="The Warden, bound astronomer"><img src="assets/warden.png" alt="" /><span>Talk to the Warden</span></button>
+        <button class="hotspot npc elowen heart-vault-only" data-id="vaultElowen" style="--x: 29%; --y: 38%; --w: 9%; --h: 51%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
+        <div id="hero" aria-label="Liora" style="--hero-x: 57%"><img src="assets/liora.png" alt="" /></div>
+        <div id="item-effect" aria-hidden="true"></div>
+        <div id="hover-label" aria-hidden="true"></div>
+      </div>
+
+      <section id="dialogue" class="dialogue" hidden aria-live="assertive">
+        <div class="portrait" aria-hidden="true"><img id="portrait-image" src="assets/liora.png" alt="" /></div>
+        <div class="dialogue-copy"><strong id="speaker">Liora</strong><p id="dialogue-text"></p><small>Click to continue</small></div>
+      </section>
+
+      <section class="command-bar" aria-label="Actions and inventory">
+        <div class="verbs" role="group" aria-label="Interaction mode">
+          <button class="verb active" data-mode="use"><span>✦</span>Use</button>
+          <button class="verb" data-mode="look"><span>◉</span>Look</button>
+        </div>
+        <div class="command-readout" id="command-readout">Explore the glade</div>
+        <div id="inventory" class="inventory" aria-label="Inventory"></div>
+      </section>
+    </section>
+
+    <section id="ending-screen" class="screen ending" aria-labelledby="ending-title">
+      <div class="ending-glow" aria-hidden="true"></div>
+      <div class="ending-card">
+        <p id="ending-eyebrow" class="eyebrow">The sky remembers</p>
+        <h2 id="ending-title">Moonrise</h2>
+        <p id="ending-copy">Liora returns the fallen light to its path. Far beyond the forest, one window in the sleeping city flickers awake.</p>
+        <p id="ending-chapter" class="the-end">To be continued</p>
+        <button id="play-again" class="ornate primary">Play again</button>
+      </div>
+    </section>
+
+    <dialog id="menu-dialog">
+      <h2>Moonfall</h2>
+      <p>Your progress is saved automatically in this browser.</p>
+      <button id="resume-button" class="ornate primary">Resume</button>
+      <button id="restart-button" class="ornate">Restart scene</button>
+      <button id="quit-button" class="ornate">Title screen</button>
+    </dialog>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <audio id="npc-voice" preload="auto" aria-hidden="true"></audio>
+    <div id="story-transition" aria-hidden="true"><div class="transition-star"></div><p>Beyond the forest, one window answers.</p></div>
+  </main>
+  <script type="module" src="game.js?v=14"></script>
+</body>
+</html>

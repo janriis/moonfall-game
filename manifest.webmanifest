@@ -1,0 +1,9 @@
+{
+  "name": "Moonfall — The Light Beneath the Roots",
+  "short_name": "Moonfall",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b0d1b",
+  "theme_color": "#101224",
+  "icons": [{ "src": "assets/moon-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

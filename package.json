@@ -1,0 +1,22 @@
+{
+  "name": "moonfall-a-point-and-click-adventure",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A portable, original browser adventure inspired by the golden age of point-and-click games.",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "check": "node --check game.js && node --check voice-lines.js && node --check scripts/generate-voices.mjs && node --check server.mjs && node --check sw.js",
+    "generate:voices": "node scripts/generate-voices.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "overrides": {
+    "sharp": "^0.35.4"
+  },
+  "devDependencies": {
+    "kokoro-js": "^1.2.1"
+  }
+}
