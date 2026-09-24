@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node server.mjs",
     "dev": "node server.mjs",
-    "check": "node --check game.js && node --check voice-lines.js && node --check scripts/generate-voices.mjs && node --check server.mjs && node --check sw.js",
+    "check": "node --check game.js && node --check game-logic.js && node --check voice-lines.js && node --check scripts/generate-voices.mjs && node --check scripts/bump-version.mjs && node --check server.mjs && node --check sw.js && node --check tests/game-logic.test.js",
+    "test": "node --test tests/*.test.js",
+    "test:ci": "node --test tests/*.test.js 2>&1",
     "generate:voices": "node scripts/generate-voices.mjs",
     "bump-version": "node scripts/bump-version.mjs"
   },

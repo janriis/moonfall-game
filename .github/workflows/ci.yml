@@ -20,3 +20,14 @@ jobs:
           node-version: 20
       - name: Run npm check (node --check on all JS files)
         run: npm run check
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Run unit tests (node:test)
+        run: npm test
