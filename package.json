@@ -8,7 +8,8 @@
     "start": "node server.mjs",
     "dev": "node server.mjs",
     "check": "node --check game.js && node --check voice-lines.js && node --check scripts/generate-voices.mjs && node --check server.mjs && node --check sw.js",
-    "generate:voices": "node scripts/generate-voices.mjs"
+    "generate:voices": "node scripts/generate-voices.mjs",
+    "bump-version": "node scripts/bump-version.mjs"
   },
   "engines": {
     "node": ">=18"
