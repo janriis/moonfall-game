@@ -578,6 +578,10 @@ export const VOICE_LINES = [
   {
     id: 'orra-shell-heard', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
     text: 'There. The shell has heard the tide turning beneath the stone.'
+  },
+  {
+    id: 'elowen-strand-home', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'One strand has found its way home. We can carry it back to the surface.'
   }
 ].map(line => ({ ...line, file: `assets/voices/${line.id}.mp3` }));
 
