@@ -8,7 +8,7 @@
   <title>Moonfall — A Point & Click Adventure</title>
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" href="assets/moon-icon.svg" />
-  <link rel="stylesheet" href="styles.css?v=71154f6" />
+  <link rel="stylesheet" href="styles.css?v=eb5f2e8" />
 </head>
 <body>
   <main id="game" aria-label="Moonfall adventure game">
@@ -118,6 +118,22 @@
         <button class="hotspot moonwake-garden-only" data-id="moonScar" style="--x: 42%; --y: 0%; --w: 30%; --h: 22%"><span>Shadowed moon</span></button>
         <button class="hotspot npc elowen moonwake-garden-only" data-id="gardenElowen" style="--x: 70%; --y: 40%; --w: 9%; --h: 49%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
 
+        <button class="hotspot moonwake-garden-only chapter-seven-only exit" data-id="moonWoundThreshold" style="--x: 37%; --y: 0%; --w: 35%; --h: 26%"><span>Moon wound ›</span></button>
+        <button class="hotspot moon-wound-only" data-id="tideglassCrystal" style="--x: 4%; --y: 43%; --w: 24%; --h: 38%"><span>Tideglass lens</span></button>
+        <button class="hotspot moon-wound-only" data-id="woundFissure" style="--x: 34%; --y: 0%; --w: 35%; --h: 26%"><span>Silver-black fracture</span></button>
+        <button class="hotspot moon-wound-only exit" data-id="moonwakeGarden" style="--x: 0%; --y: 18%; --w: 16%; --h: 55%"><span>‹ Moonwake Garden</span></button>
+        <button class="hotspot moon-wound-only exit" data-id="moonHeartPassage" style="--x: 78%; --y: 24%; --w: 22%; --h: 64%"><span>Quiet Heart ›</span></button>
+        <button class="hotspot npc elowen moon-wound-only" data-id="woundElowen" style="--x: 49%; --y: 42%; --w: 9%; --h: 49%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
+        <button class="hotspot moon-heart-only exit" data-id="moonWoundThreshold" style="--x: 0%; --y: 20%; --w: 18%; --h: 56%"><span>‹ Wound Threshold</span></button>
+        <button class="hotspot moon-heart-only" data-id="hushShellShrine" style="--x: 5%; --y: 55%; --w: 20%; --h: 33%"><span>Hush-shell</span></button>
+        <button class="hotspot moon-heart-only" data-id="quietSeam" style="--x: 16%; --y: 18%; --w: 24%; --h: 35%"><span>Humming seam</span></button>
+        <button class="hotspot moon-heart-only" data-id="dryBasin" style="--x: 33%; --y: 60%; --w: 35%; --h: 32%"><span>Dry tide basin</span></button>
+        <button class="hotspot moon-heart-only" data-id="lunarLoom" style="--x: 40%; --y: 5%; --w: 34%; --h: 51%"><span>Moonlight loom</span></button>
+        <button class="hotspot moon-heart-only" data-id="moonlightCocoon" style="--x: 73%; --y: 7%; --w: 25%; --h: 48%"><span>Sealed moonlight</span></button>
+        <button class="hotspot npc orra moon-heart-only" data-id="orra" style="--x: 77%; --y: 38%; --w: 11%; --h: 52%" aria-label="Orra, lunar moth caretaker"><img src="assets/orra.png" alt="" /><span>Talk to Orra</span></button>
+        <button class="hotspot npc elowen moon-heart-only" data-id="heartElowen" style="--x: 23%; --y: 38%; --w: 9%; --h: 50%" aria-label="Elowen, wayfinder"><img src="assets/elowen.png" alt="" /><span>Talk to Elowen</span></button>
+
         <div id="hero" aria-label="Liora" style="--hero-x: 57%"><img src="assets/liora.png" alt="" /></div>
         <div id="item-effect" aria-hidden="true"></div>
         <div id="hover-label" aria-hidden="true"></div>
@@ -161,6 +177,6 @@
     <audio id="npc-voice" preload="auto" aria-hidden="true"></audio>
     <div id="story-transition" aria-hidden="true"><div class="transition-star"></div><p>Beyond the forest, one window answers.</p></div>
   </main>
-  <script type="module" src="game.js?v=71154f6"></script>
+  <script type="module" src="game.js?v=eb5f2e8"></script>
 </body>
 </html>

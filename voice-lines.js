@@ -478,6 +478,106 @@ export const VOICE_LINES = [
   {
     id: 'elowen-road-ours', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
     text: 'The ferry is ready. The road ahead belongs to us.'
+  },
+  {
+    id: 'elowen-wound-road', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The compass recognizes this wound. The road was drawn into it long before Lantern City had a name.'
+  },
+  {
+    id: 'elowen-moonseed-road', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The moonseed is coming with us. Its light belongs to the road.'
+  },
+  {
+    id: 'elowen-moonseed-guide', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Keep the moonseed close. Its light is the only thing here that has never forgotten the way.'
+  },
+  {
+    id: 'elowen-read-the-tide', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The compass turns beneath the glare. Look through something that can read a tide.'
+  },
+  {
+    id: 'elowen-old-mark', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The old mark leads inward. I can feel the current waiting beyond the arch.'
+  },
+  {
+    id: 'elowen-lunar-loom', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'This loom is older than the city. It feels like a map made to be heard.'
+  },
+  {
+    id: 'elowen-humming-seam', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The humming seam is keeping a note for us. Let the hush-shell listen.'
+  },
+  {
+    id: 'elowen-join-tideglass', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'Now join the tideglass to the shell. The loom will need a voice, not a key.'
+  },
+  {
+    id: 'elowen-wake-basin', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The clear note should wake the dry basin first.'
+  },
+  {
+    id: 'elowen-open-loom', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The moonseed is answering the open loom. Play the tide chime there.'
+  },
+  {
+    id: 'orra-moonwake-seed', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'A seed from the Moonwake. I have not heard a small light choose its own way in a very long while.'
+  },
+  {
+    id: 'orra-light-folded', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'Its light folded itself behind the wound when the old tide rose too quickly.'
+  },
+  {
+    id: 'orra-tide-will-answer', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'A remembered tide can loosen it. The loom will not answer force.'
+  },
+  {
+    id: 'orra-shell-listen', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'Let the hush-shell listen at the seam. Its quiet note will join the tideglass.'
+  },
+  {
+    id: 'orra-shell-remembers', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'The shell has heard the tide. Join it to the lens, and the chime will remember.'
+  },
+  {
+    id: 'orra-call-the-tide', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'Give the tide chime to the dry basin. Let the water rise at its own pace.'
+  },
+  {
+    id: 'orra-seed-knows', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'The moonseed knows what the loom is protecting. Play the same note at its heart.'
+  },
+  {
+    id: 'orra-one-strand', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'One strand has woken. The moon can begin to remember its own light.'
+  },
+  {
+    id: 'orra-hush-shell-item', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'Let the shell hear the seam’s low note. Then it will remember the tide.'
+  },
+  {
+    id: 'orra-lens-item', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'A useful lens. The fracture is an old road, but the current is hidden in its glare.'
+  },
+  {
+    id: 'orra-chime-item', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'The first tide has answered. The same note can open the moonlight loom.'
+  },
+  {
+    id: 'orra-moonseed-item', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'The moonseed carries the light that the heart has kept safe.'
+  },
+  {
+    id: 'elowen-fracture-seal', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'The fracture is a road and a seal.'
+  },
+  {
+    id: 'elowen-follow-mark', speaker: 'Elowen', voice: 'af_heart', speed: 0.96,
+    text: 'There—the fracture folds into a road. The compass was made to follow this mark.'
+  },
+  {
+    id: 'orra-shell-heard', speaker: 'Orra', voice: 'bf_emma', speed: 0.92,
+    text: 'There. The shell has heard the tide turning beneath the stone.'
   }
 ].map(line => ({ ...line, file: `assets/voices/${line.id}.mp3` }));
 

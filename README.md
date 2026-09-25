@@ -2,11 +2,11 @@
 
 **Moonfall: The Light Beneath the Roots** is an original, compact point-and-click fantasy adventure told across connected scenes. It takes inspiration from the warm, theatrical presentation and inventory puzzles of early-1990s adventure games while using an original world, story, character, and art.
 
-The story follows Liora into Moonfall Glade to return a fallen star to the sky, then flows seamlessly across the Dreamer's Causeway and into the Lantern Archive. Beyond the city gate, Lantern Court and the Hall of Names lead her to the sister she thought she had lost—and together they descend beneath the palace to learn who closed the sky.
+The story follows Liora into Moonfall Glade to return a fallen star to the sky, then flows seamlessly through Lantern City, the Rootspire, and a starway beyond every royal map. With Elowen, she follows a sheltered moonseed into a fracture across the moon and meets Orra, a lunar moth caretaker, in the Quiet Heart within.
 
 Along the way, Liora can speak with Mosswick, the eccentric keeper of Moonfall Glade; Sera Vale, a spectral archivist; Elowen, a wayfinder trapped inside the city’s memory mirror; and the Warden, an ancient royal astronomer bound beneath the palace. Their advice changes as the puzzles progress.
 
-Mosswick, Sera Vale, Elowen, and the Warden are fully voiced. Their performances are generated locally with the Apache-2.0-licensed [Kokoro](https://github.com/hexgrad/kokoro) model and bundled with the game; playback requires no account, API key, or network connection.
+Mosswick, Sera Vale, Elowen, the Warden, and Orra are voiced. Their performances are generated locally with the Apache-2.0-licensed [Kokoro](https://github.com/hexgrad/kokoro) model and bundled with the game; playback requires no account, API key, or network connection.
 
 Every location introduces itself on its first visit with atmospheric narration describing its layout, light, sounds, scents, and mood. Returning to an already visited room resumes play immediately.
 
@@ -53,4 +53,4 @@ For a native `.app`, `.exe`, or Linux package later, wrap this same folder with 
 
 ## Art direction
 
-The raster assets were generated specifically for this project from original prompts: Moonfall Glade, the Forgotten Orrery, the Dreamer's Causeway, the Lantern Archive, Lantern Court, the Hall of Names, the Palace Atrium, the Heart Vault, Liora, Mosswick, Sera Vale, Elowen, and the Warden. No original game assets are included.
+The raster assets were generated specifically for this project from original prompts, including the Wound Threshold and Quiet Heart. No original game assets are included.

@@ -1,12 +1,12 @@
 # Moonfall development status
 
-Last updated: 2026-09-23
+Last updated: 2026-09-25
 
 ## Current phase
 
-The game is a complete browser-playable vertical slice through six internal story chapters. Players never see chapter numbers: each part flows into the next as a new scene. The current build ends after Liora and Elowen follow the restored celestial compass beyond Lantern City, release a sheltered moonseed, and discover a fracture across the moon.
+Chapter VII is implemented in the working tree and tracked in [GitHub issue #11](https://github.com/janriis/moonfall-game/issues/11). Players never see chapter numbers: each part flows into the next as a new scene. Liora and Elowen follow the restored compass into the moon’s wound, meet Orra in the Quiet Heart, and wake one strand of the moonlight that folded itself behind the fracture to survive an ancient tide.
 
-The next development session should follow the compass into the newly revealed moon wound, as described under **Resume here next session**.
+Automated checks and a browser playthrough remain pending for this chapter. The next development session should follow the newly awakened moonlight, as described under **Resume here next session**.
 
 ## GitHub issue workflow
 
@@ -22,7 +22,7 @@ The chapter template also covers story beats, rooms, puzzles, save migration, vo
 
 ## Playable route
 
-There are twelve finished rooms:
+There are fourteen implemented rooms:
 
 1. **Moonfall Glade** — meet Mosswick, collect a glowcap and moonwater, make a gleam lantern, and recover the star key.
 2. **The Forgotten Orrery** — unlock the mechanism, fill its crystal basin, and return the fallen light to the sky.
@@ -36,8 +36,10 @@ There are twelve finished rooms:
 10. **The Crown Chamber** — combine nightglass with a dawn petal, reveal the circlet's first design, and free its captive constellations without enthroning Elowen.
 11. **The Starway Crossing** — leave the Warden to help the waking city, repair an ancient star-ferry sail, and follow the celestial compass beyond every royal map.
 12. **The Moonwake Garden** — combine a singing moon reed with an echo shell, gently open the eclipse flower, and learn that its shadow protected a moonseed from the fracture behind it.
+13. **The Wound Threshold** — look through tideglass to read the compass’s hidden road into the moon.
+14. **The Quiet Heart** — let a hush-shell hear the lunar seam, join it to the tideglass as a chime, call the old tide into the basin, and awaken one strand of the moon’s sheltered light.
 
-The completed story beat is: the Warden remains in Lantern City to help it live beneath an open sky, while Liora and Elowen take a repaired star-ferry to the Moonwake Garden. The darkness crossing the moon proves to be the sheltering shadow of an eclipse flower. When a mooncall coaxes it open, its protected seed joins the restored stars and reveals a silver-black wound across the moon. The celestial compass points directly inside.
+The current story beat is: the Warden remains in Lantern City to help it live beneath an open sky, while Liora and Elowen take a repaired star-ferry to the Moonwake Garden. The darkness crossing the moon proves to be the sheltering shadow of an eclipse flower. Its protected moonseed joins the restored stars and reveals a silver-black wound. Inside the moon, the companions learn that its light folded inward to survive a wild ancient tide. Orra, a lunar moth caretaker, helps them awaken one strand without forcing the rest of the source open.
 
 ## Core systems
 
@@ -60,10 +62,11 @@ The completed story beat is: the Warden remains in Lantern City to help it live 
 - `chapterFourState(sound)` — Palace Atrium and Heart Vault
 - `chapterFiveState(sound)` — Rootspire Approach and Crown Chamber
 - `chapterSixState(sound)` — Starway Crossing and Moonwake Garden
+- `chapterSevenState(sound)` — Wound Threshold and Quiet Heart
 
 Scene transitions preserve the sound setting but deliberately start a new inventory and flag set. Older completed saves are forwarded into the next playable scene when Continue is selected, including builds that stopped after the Hall of Names.
 
-Important completion flags are `chapterOneComplete` through `chapterSixComplete`. The final flag reopens the current ending card on Continue. Completed Chapter V saves from the previous build migrate directly into the Starway Crossing.
+Important completion flags are `chapterOneComplete` through `chapterSevenComplete`. The current chapter’s completion flag reopens its ending card on Continue. Completed Chapter VI saves migrate directly into the Wound Threshold; the migration preserves sound preference and starts Chapter VII with its moonseed companion.
 
 ## NPC voices
 
@@ -75,6 +78,7 @@ Voice assignments:
 - Sera Vale — `bf_emma`, speed `0.98`, light spectral echo
 - Elowen and the unknown city voice — `af_heart`, speed `0.96`/`0.94`, restrained memory echo
 - The Warden — `am_onyx`, speed `0.88`, low chamber echo
+- Orra — `bf_emma`, speed `0.92`
 
 Dialogue lookup is exact: every voiced `speaker` and `text` pair in `game.js` must exactly match an entry in `voice-lines.js`. After adding or editing voiced lines, run:
 
@@ -107,12 +111,15 @@ The newest generated art is:
 - `assets/crown-chamber.png`
 - `assets/starway-crossing.png`
 - `assets/moonwake-garden.png`
+- `assets/moon-wound-threshold.png`
+- `assets/quiet-heart.png`
+- `assets/orra.png`
 
 All raster art was created for Moonfall from original prompts. No art from the games that inspired its presentation is included.
 
 ## Verification
 
-Current build status (2026-09-23): `npm run check` passes, all 120 manifest voice files exist, and the moon-shadow sequence has completed a browser playthrough through **The Wound Above**. Migration from a Chapter V completion save into the Starway Crossing works, both new puzzles complete normally, and Continue reopens the Chapter VI ending after a reload.
+Current build status (2026-09-25): Chapter VII code, original scene art, Orra sprite, and 145 bundled voice clips are present. The chapter has not yet had its syntax check or browser playthrough; verify Chapter VI save migration, both lunar puzzles, mid-chapter autosave, return visits, sound-off behavior, Chapter VII ending Continue, and offline assets before closing issue #11.
 
 Run these checks before handing off a build:
 
@@ -128,16 +135,15 @@ In the browser, verify a new game, Continue, room narration, return visits, move
 - Voiced dialogue is intentionally duplicated between `game.js` and `voice-lines.js`; punctuation changes can silently break lookup.
 - The service-worker version is auto-generated from git SHA via `npm run bump-version`; run it before deploying.
 - Gameplay does not yet have automated end-to-end tests.
-- The current story stops when the moonseed reveals a fracture across the moon and the restored celestial compass points inside it.
+- Chapter VII currently ends after awakening one strand of the moon’s sheltered light. The wider lunar source and the cost of restoring it remain unresolved.
 - Google Fonts are optional network resources. Offline play uses the serif fallback.
 
 ## Resume here next session
 
-Start with the next seamless scene after the Moonwake Garden:
+Start with the next seamless scene after the Quiet Heart:
 
-1. Decide what fractured the moon, what survives inside the wound, and why the original celestial compass recognizes it as a road.
-2. Outline a two-room lunar interior arc, beginning at the wound's threshold and ending at the source of the missing moonlight.
-3. Decide whether the moonseed travels with Liora and Elowen as a light, guide, or new character.
-4. Create the new lunar environment art and any character or creature art required by the reveal.
-5. Add first-visit narration, hotspots, fresh chapter state, puzzle interactions, contextual hints, dialogue, voices, and offline assets.
-6. Preserve the seamless transition, migrate Chapter VI completion saves forward, and update this document's route and resume point.
+1. Decide what waking one strand changes in Lantern City and whether the moonseed can remain inside the lunar source.
+2. Shape Chapter VIII around the wider source of the moonlight and the risk of bringing it fully awake.
+3. Complete the syntax check and browser playthrough recorded in issue #11; update its checklist before closing it.
+4. Carry the current story forward with a seamless transition, fresh state, save migration, original art, voices, and offline cache entries.
+5. Update this document's route and next-session handoff as the chapter progresses.
